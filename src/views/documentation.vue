@@ -1,6 +1,6 @@
 <template>
-  <div>documentation ddd
-
+  <div>
+    documentation ddd
     <RouterView />
   </div>
 </template>

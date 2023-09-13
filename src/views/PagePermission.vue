@@ -1,8 +1,8 @@
 <template>
-  <div>dashboard</div>
+  <h1>Page Permission</h1>
 </template>
 <script>
 export default {
-  name: 'Dashboard'
+  name: 'PagePermission'
 }
 </script>

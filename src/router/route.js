@@ -1,43 +1,49 @@
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    redirect: '/dashboard'
-  },
-  {
     path: '/dashboard',
-    name: 'dashboard',
-    // route level code-splitting
-    // this generates a separate chunk (About.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import('../views/dashboard.vue')
+    name: '首页',
+    meta: { icon: 'House' },
+    component: () => import('../views/dashboard/dashboard.vue')
   },
   {
     path: '/documentation',
-    name: 'documentation',
+    name: '文档',
     component: () => import('../views/documentation.vue'),
+    meta: { icon: 'Document' }
+  },
+  {
+    path: '/guide',
+    name: '引导页',
+    component: () => import('../views/Guide.vue'),
+    meta: { icon: 'Position' }
+  },
+  {
+    path: '/permission',
+    name: '权限测试页',
+    meta: { icon: 'Lock' },
     children: [
       {
-        path: '/documentation/home',
-        name: 'docHome',
-        component: () => import('../views/dashboard.vue')
+        path: '/permission/pagePermission',
+        name: '页面权限',
+        component: () => import('../views/PagePermission.vue')
+      },
+      {
+        path: '/permission/directivePermission',
+        name: '指令权限',
+        component: () => import('../views/DirectivePermission.vue')
+      },
+      {
+        path: '/permission/rolePermission',
+        name: '角色权限',
+        component: () => import('../views/RolePermission.vue')
       }
     ]
   },
   {
-    path: '/Guide',
-    name: 'Guide',
-    component: () => import('../views/Guide.vue')
-  },
-  {
-    path: '/Permission',
-    name: 'Permission',
-    component: () => import('../views/Permission.vue')
-  },
-  {
-    path: '/Icons',
-    name: 'Icons',
-    component: () => import('../views/Icons.vue')
+    path: '/icons',
+    name: '图标',
+    component: () => import('../views/Icons.vue'),
+    meta: { icon: '#icon-i' }
   },
   // {
   //   path: '/documentation',
@@ -45,34 +51,96 @@ const routes = [
   //   component: () => import('../views/documentation.vue')
   // },
   {
-    path: '/Components',
-    name: 'Components',
-    component: () => import('../views/Components.vue')
+    path: '/components',
+    name: '组件',
+    component: () => import('../views/Components.vue'),
+    meta: { icon: '#icon-component' }
   },
   {
-    path: '/Charts',
-    name: 'Charts',
-    component: () => import('../views/Charts.vue')
+    path: '/charts',
+    name: '图表',
+    component: () => import('../views/Charts.vue'),
+    meta: { icon: 'Histogram' }
   },
   {
-    path: '/Nested-Routes',
-    name: 'Nested-Routes',
-    component: () => import('../views/Nested-Routes.vue')
+    path: '/nested-Routes',
+    name: '路由嵌套',
+    component: () => import('../views/Nested-Routes.vue'),
+    meta: { icon: '#icon-routes' }
   },
   {
-    path: '/MyTable',
+    path: '/myTable',
     name: 'MyTable',
-    component: () => import('../views/MyTable.vue')
+    component: () => import('../views/MyTable.vue'),
+    meta: { icon: 'Grid' }
   },
   {
-    path: '/Example',
-    name: 'Example',
-    component: () => import('../views/Example.vue')
+    path: '/example',
+    name: '综合实例',
+    meta: { icon: 'HelpFilled' },
+    children: [
+      {
+        path: '/example/create',
+        component: () => import('@/views/example/create.vue'),
+        name: '创建文章',
+        meta: { title: 'Create Article', icon: 'Edit' }
+      },
+      {
+        path: '/example/edit',
+        component: () => import('@/views/example/edit.vue'),
+        name: 'EditArticle',
+        meta: { title: 'Edit Article', noCache: true, activeMenu: '/example/list' },
+        hidden: true
+      },
+      {
+        path: '/example/list',
+        component: () => import('@/views/example/list.vue'),
+        name: '文章列表',
+        meta: { title: 'Article List', icon: 'List' }
+      }
+    ]
   },
   {
-    path: '/Tab',
+    path: '/tab',
     name: 'Tab',
-    component: () => import('../views/Tab.vue')
+    meta: { icon: '#icon-table' },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/Tab.vue'),
+        name: 'Tab',
+        meta: { title: 'Tab' }
+      }
+    ]
+  },
+  {
+    path: '/error',
+    redirect: 'noRedirect',
+    name: '错误页面',
+    meta: {
+      title: 'Error Pages',
+      icon: 'WarnTriangleFilled'
+    },
+    children: [
+      {
+        path: '401',
+        component: () => import('@/views/error-page/401.vue'),
+        name: 'Page401',
+        meta: { title: '401', noCache: true }
+      },
+      // {
+      //   path: '404',
+      //   component: () => import('@/views/error-page/404'),
+      //   name: 'Page404',
+      //   meta: { title: '404', noCache: true }
+      // }
+    ]
+  },
+  {
+    path: '/errorLog',
+    name: '错误日志',
+    component: () => import('../views/errorLog.vue'),
+    meta: { icon: 'QuestionFilled' }
   }
 ]
 export default routes

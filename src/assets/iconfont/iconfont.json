@@ -1,0 +1,65 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "462770",
+      "name": "money",
+      "font_class": "money",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "663541",
+      "name": "shoping car",
+      "font_class": "i-shoping-car",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "703573",
+      "name": "routes",
+      "font_class": "routes",
+      "unicode": "ea59",
+      "unicode_decimal": 59993
+    },
+    {
+      "icon_id": "1389514",
+      "name": "component",
+      "font_class": "component",
+      "unicode": "e75e",
+      "unicode_decimal": 59230
+    },
+    {
+      "icon_id": "5317063",
+      "name": "users",
+      "font_class": "users",
+      "unicode": "e73e",
+      "unicode_decimal": 59198
+    },
+    {
+      "icon_id": "8474261",
+      "name": "github",
+      "font_class": "github",
+      "unicode": "e6b7",
+      "unicode_decimal": 59063
+    },
+    {
+      "icon_id": "34453289",
+      "name": "table",
+      "font_class": "table",
+      "unicode": "e86c",
+      "unicode_decimal": 59500
+    },
+    {
+      "icon_id": "35336029",
+      "name": "i",
+      "font_class": "i",
+      "unicode": "e8af",
+      "unicode_decimal": 59567
+    }
+  ]
+}

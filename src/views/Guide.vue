@@ -1,5 +1,6 @@
 <template>
   <div>Guide</div>
+  <RouterView />
 </template>
 <script>
 export default {

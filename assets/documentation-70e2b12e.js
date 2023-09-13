@@ -1,0 +1,1 @@
+import{_ as o,r as t,o as n,d as a,g as c,a as r}from"./index-aaf5590d.js";const s={name:"documentation"};function d(_,i,m,p,u,l){const e=t("RouterView");return n(),a("div",null,[c(" documentation ddd "),r(e)])}const x=o(s,[["render",d]]);export{x as default};

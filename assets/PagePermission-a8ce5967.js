@@ -1,0 +1,1 @@
+import{_ as e,o as s,d as o}from"./index-aaf5590d.js";const n={name:"PagePermission"};function r(a,t,c,i,_,m){return s(),o("h1",null,"Page Permission")}const f=e(n,[["render",r]]);export{f as default};

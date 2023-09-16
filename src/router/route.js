@@ -71,8 +71,29 @@ const routes = [
   {
     path: '/myTable',
     name: 'MyTable',
-    component: () => import('../views/MyTable.vue'),
-    meta: { icon: 'Grid' }
+    meta: { icon: 'Grid' },
+    children: [
+      {
+        path: '/dynamicTable',
+        name: '动态表',
+        component: () => import('../views/Table/dynamic-table/DynamicTable.vue')
+      },
+      {
+        path: '/dragTable',
+        name: '拖动表格',
+        component: () => import('../views/Table/drag-table/DragTable.vue')
+      },
+      {
+        path: '/inlineEdit',
+        name: '内联表格',
+        component: () => import('../views/Table/inline-edit/InlineEdit.vue')
+      },
+      {
+        path: '/complexTable',
+        name: '复合表格',
+        component: () => import('../views/Table/complex-table/ComplexTable.vue')
+      }
+    ]
   },
   {
     path: '/example',
@@ -127,7 +148,7 @@ const routes = [
         component: () => import('@/views/error-page/401.vue'),
         name: 'Page401',
         meta: { title: '401', noCache: true }
-      },
+      }
       // {
       //   path: '404',
       //   component: () => import('@/views/error-page/404'),

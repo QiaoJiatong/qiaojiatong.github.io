@@ -1,9 +1,9 @@
 <template>
-    <div>MyTable</div>
+    <div>拖动表格</div>
   </template>
   <script>
   export default {
-    name: 'MyTable'
+    name: 'DragTable'
   }
   </script>
   

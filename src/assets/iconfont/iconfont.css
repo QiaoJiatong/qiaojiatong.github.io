@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id  */
-  src: url('iconfont.ttf?t=1694587441565') format('truetype');
+  src: url('iconfont.ttf?t=1694661793592') format('truetype');
 }
 
 .iconfont {
@@ -27,11 +27,15 @@
   content: "\e75e";
 }
 
+.icon-github:before {
+  content: "\e691";
+}
+
 .icon-users:before {
   content: "\e73e";
 }
 
-.icon-github:before {
+.icon-github1:before {
   content: "\e6b7";
 }
 

@@ -1,7 +1,15 @@
 <template>
   <div class="todo-item">
-    <input @click="todoClickHandler" class="box" type="checkbox" :id="item.id" check />
-    <label :for="item.id">{{ item.content }}</label>
+    <input
+      @click="todoClickHandler"
+      class="box"
+      type="checkbox"
+      :id="item.id"
+      :checked="item.ItemState"
+    />
+    <label :for="item.id" v-if="item.ItemState" class="todo-label">{{ item.content }}</label>
+    <label :for="item.id" v-else>{{ item.content }}</label>
+    <button class="dashboard-todo-button" @click="dashboardTodoDelete">x</button>
   </div>
 </template>
 
@@ -11,16 +19,13 @@ export default {
   props: {
     item: Object
   },
-  data() {
-    return {
-      show: false,
-      timer: null
-    }
-  },
-  emits: ['item-complete'],
+  emits: ['item-complete', 'todoItem-delete'],
   methods: {
     todoClickHandler() {
       this.$emit('item-complete')
+    },
+    dashboardTodoDelete() {
+      this.$emit('todoItem-delete')
     }
   }
 }
@@ -34,25 +39,28 @@ input {
   margin-top: 6px;
 }
 .todo-item {
-  padding-right: 20px;
+  width: 400px;
   display: flex;
-}
-
-.popup {
-  position: fixed;
-  top: 50%;
-  left: 40%;
-  transform: translate(-50%, -50%);
-  background-color: #d36767;
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 8px;
-  z-index: 999;
+  margin: 10px;
 }
 .box {
   margin-left: 10px;
   margin-bottom: 10px;
   border-radius: 5px;
   display: block;
+}
+.dashboard-todo-button {
+  font-size: 15px;
+  font-weight: 200;
+  color: rgb(197, 26, 26);
+  right: 350px;
+  position: absolute;
+  border: 0;
+  background-color: rgb(255, 255, 255);
+  margin-top: 6px;
+}
+.todo-label{
+  text-decoration: line-through;
+  color: #d9d9d9;
 }
 </style>

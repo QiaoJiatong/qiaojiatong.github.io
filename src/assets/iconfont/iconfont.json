@@ -34,6 +34,13 @@
       "unicode_decimal": 59230
     },
     {
+      "icon_id": "1467351",
+      "name": "github",
+      "font_class": "github",
+      "unicode": "e691",
+      "unicode_decimal": 59025
+    },
+    {
       "icon_id": "5317063",
       "name": "users",
       "font_class": "users",
@@ -43,7 +50,7 @@
     {
       "icon_id": "8474261",
       "name": "github",
-      "font_class": "github",
+      "font_class": "github1",
       "unicode": "e6b7",
       "unicode_decimal": 59063
     },

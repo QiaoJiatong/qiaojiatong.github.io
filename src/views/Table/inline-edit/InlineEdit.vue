@@ -9,9 +9,9 @@
       </template>
     </el-table-column>
     <el-table-column prop="status" label="Status" />
-    <el-table-column prop="title" label="Title" >
+    <el-table-column prop="title" label="Title">
       <template #default="scope">
-        <div v-if="scope.row.editStatus" style="display: flex;">
+        <div v-if="scope.row.editStatus" style="display: flex">
           <el-input type="text" v-model="scope.row.title" />
           <el-button text type="danger" @click="scope.row.editStatus = false"> cancel </el-button>
         </div>
@@ -20,7 +20,9 @@
     </el-table-column>
     <el-table-column label="Actions">
       <template #default="scope">
-        <el-button text type="primary" @click="editRow(scope.row)"> {{scope.row.editStatus === false ? 'Edit' : 'OK'}} </el-button>
+        <el-button text type="primary" @click="editRow(scope.row)">
+          {{ scope.row.editStatus === false ? 'Edit' : 'OK' }}
+        </el-button>
       </template>
     </el-table-column>
   </el-table>

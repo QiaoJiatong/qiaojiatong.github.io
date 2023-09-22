@@ -1,0 +1,1 @@
+import{_ as e,o as s,h as o}from"./index-3268ad1a.js";const n={name:"PagePermission"};function r(a,t,c,i,_,m){return s(),o("h1",null,"Page Permission")}const f=e(n,[["render",r]]);export{f as default};

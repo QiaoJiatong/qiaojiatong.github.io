@@ -1,0 +1,1 @@
+import{_ as e,o as r,h as s}from"./index-3268ad1a.js";const o={name:"DirectivePermission"};function t(i,n,c,a,_,m){return r(),s("h1",null,"Directive Permission")}const f=e(o,[["render",t]]);export{f as default};

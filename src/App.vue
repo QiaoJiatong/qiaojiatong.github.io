@@ -3,6 +3,7 @@
     <el-container>
       <SideBar />
       <el-main>
+        <myTag />
         <router-view />
       </el-main>
     </el-container>
@@ -10,9 +11,10 @@
 </template>
 <script>
 import SideBar from '@/components/side-bar.vue'
+import myTag from './components/myTag.vue';
 export default {
   name: 'App',
-  components: { SideBar },
+  components: { SideBar , myTag },
   methods: {}
 }
 </script>

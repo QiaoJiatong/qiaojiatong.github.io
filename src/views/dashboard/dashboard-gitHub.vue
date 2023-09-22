@@ -7,13 +7,12 @@
     <icon-font
       class="dashboard-card-gitHub"
       icon-name="#icon-github"
-      style="pointer-events: none"
     />
   </a>
 </template>
 <script>
 export default {
-  name: 'dashboardGitHub'
+  name: 'DashboardGitHub'
 }
 </script>
 <style scoped>

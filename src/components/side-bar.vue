@@ -53,7 +53,7 @@ export default {
     },
     clickMenuItem(route) {
       this.$router.push(route)
-    }
+    },
   }
 }
 </script>
@@ -61,6 +61,10 @@ export default {
 <style scoped>
 .el-aside {
   height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
 }
 
 .el-menu {

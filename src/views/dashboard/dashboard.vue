@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>dashboard</h1>
     <div class="dashboard-editor-container">
       <dashboardGitHub />
       <el-row class="dashboard-editor-row" :gutter="20">
@@ -12,6 +11,7 @@
           :card-num="card.cardNum"
         />
       </el-row>
+      <Echarts />
       <div class="dashboard-editor-table">
         <DashboardTable />
         <dashboardTodo2Vue />
@@ -26,9 +26,17 @@ import DashboardTable from './dashboard-table/dashboard-table.vue'
 import dashboardTodo2Vue from './dashboard-todo/dashboard-todo2.vue'
 import reminderCard from './dashboard-reminder-card/reminder-card.vue'
 import dashboardGitHub from './dashboard-gitHub.vue'
+import Echarts from './echarts.vue'
 export default {
   name: 'Dashboard',
-  components: { DashboardCard, DashboardTable, dashboardTodo2Vue, reminderCard, dashboardGitHub },
+  components: {
+    DashboardCard,
+    DashboardTable,
+    dashboardTodo2Vue,
+    reminderCard,
+    dashboardGitHub,
+    Echarts
+  },
   data() {
     return {
       cardData: [
@@ -60,6 +68,8 @@ export default {
 <style scoped>
 .dashboard-editor-container {
   background-color: rgb(208, 226, 228);
+  margin-left: 200px;
+
 }
 .dashboard-editor-row {
   top: 30px;

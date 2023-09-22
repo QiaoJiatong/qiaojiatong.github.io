@@ -90,7 +90,7 @@ const routes = [
       },
       {
         path: '/complexTable',
-        name: '复合表格',
+        name: '查询表格',
         component: () => import('../views/Table/complex-table/ComplexTable.vue')
       }
     ]

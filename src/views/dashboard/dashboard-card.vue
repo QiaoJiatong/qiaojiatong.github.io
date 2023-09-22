@@ -1,17 +1,17 @@
 <template>
-  <el-col class="dashboard-card-col" :span="5">
-    <el-card shadow="hover">
-      <div class="card-content">
-        <div class="icon-wrapper dashboard-card" :class="`icon__${iconName}`">
-          <icon-font class="dashboard-card-icon" :icon-name="iconName" />
+    <el-col class="dashboard-card-col" :span="5">
+      <el-card shadow="hover">
+        <div class="card-content">
+          <div class="icon-wrapper dashboard-card" :class="`icon__${iconName}`">
+            <icon-font class="dashboard-card-icon" :icon-name="iconName" />
+          </div>
+          <div class="card-panel-description">
+            <div class="card-panel-text">{{ cardText }}</div>
+            <span class="card-panel-num">{{ cardNum }}</span>
+          </div>
         </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">{{ cardText }}</div>
-          <span class="card-panel-num">{{ cardNum }}</span>
-        </div>
-      </div>
-    </el-card>
-  </el-col>
+      </el-card>
+    </el-col>
 </template>
 <script>
 export default {
@@ -55,7 +55,7 @@ export default {
   background-color: #36a3f7;
 }
 
-.icon__\#icon-money{
+.icon__\#icon-money {
   color: #f4516c;
 }
 
@@ -63,7 +63,7 @@ export default {
   background-color: #f4516c;
 }
 
-.icon__ShoppingCart{
+.icon__ShoppingCart {
   color: #34bfa3;
 }
 
@@ -92,7 +92,7 @@ export default {
   margin-bottom: 12px;
 }
 
-.dashboard-card-col{
+.dashboard-card-col {
   margin: 20px;
 }
 </style>

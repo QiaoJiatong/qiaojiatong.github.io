@@ -49,14 +49,10 @@ const allItems = ref([])
 // }, '分叉这个储存库', '关注作者', 'vue-元素-管理'])
 
 onMounted(() => {
-  axios
-    .get(
-      'https://6504881cc8869921ae252701.mockapi.io/todoList'
-    )
-    .then((res) => {
-      allItems.value = res.data.map(d => d.text)
-      checkedItems.value = []
-    })
+  axios.get('https://6504881cc8869921ae252701.mockapi.io/todoList').then((res) => {
+    allItems.value = res.data.map((d) => d.text)
+    checkedItems.value = []
+  })
 })
 
 const checkedItems = ref([])
@@ -122,14 +118,30 @@ const dashboardTodoDelete = (deletedItem) => {
   margin-left: 10px;
   padding: 10px;
 }
-.todo-list__delete-button {
+
+.todo-item:hover .todo-list__delete-button {
+  display: block;
   cursor: pointer;
   font-size: 18px;
-  font-weight: 400;
-  color: rgb(197, 26, 26);
+  font-weight: 500;
+  color: rgb(150, 107, 107);
   border: 0;
   background-color: rgb(255, 255, 255);
 }
+
+.todo-list__delete-button:hover .todo-list__delete-button {
+  display: block;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;
+  color: rgb(233, 19, 19);
+  border: 0;
+  background-color: rgb(255, 255, 255);
+}
+.todo-list__delete-button {
+  display: none;
+}
+
 .dashboard-todo-button {
   margin-left: 20px;
   display: flex;

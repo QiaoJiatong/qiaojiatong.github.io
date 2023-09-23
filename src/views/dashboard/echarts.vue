@@ -94,48 +94,38 @@ export default {
     })
     const myRoseDiagram = echarts.init(this.$refs.roseDiagram)
     myRoseDiagram.setOption({
-      legend: {
-        left: 'center',
-        top: 'bottom',
-        data: ['rose1', 'rose2', 'rose3', 'rose4', 'rose5', 'rose6', 'rose7', 'rose8']
+  legend: {
+    top: 'bottom'
+  },
+  toolbox: {
+    show: true,
+    feature: {
+      mark: { show: true },
+      dataView: { show: true, readOnly: false },
+      restore: { show: true },
+      saveAsImage: { show: true }
+    }
+  },
+  series: [
+    {
+      name: 'Radius Mode',
+      type: 'pie',
+      radius: [10, 80],
+      center: ['50%', '50%'],
+      roseType: 'area',
+      itemStyle: {
+        borderRadius: 5
       },
-      toolbox: {
-        show: true,
-        feature: {
-          mark: { show: true },
-          dataView: { show: true, readOnly: false },
-          restore: { show: true },
-          saveAsImage: { show: true }
-        }
-      },
-      series: [
-        {
-          name: 'Radius Mode',
-          type: 'pie',
-          radius: [20, 100],
-          center: ['25%', '50%'],
-          roseType: 'radius',
-          itemStyle: {
-            borderRadius: 5
-          },
-          label: {
-            show: false
-          },
-          emphasis: {
-            label: {
-              show: true
-            }
-          },
-          data: [
-            { value: 40, name: 'Industries' },
-            { value: 34, name: 'Technology' },
-            { value: 28, name: 'Forex' },
-            { value: 24, name: 'Gold' },
-            { value: 18, name: 'Forecasts' },
-          ]
-        }
+      data: [
+        { value: 40, name: 'Industries' },
+        { value: 28, name: 'Technology' },
+        { value: 18, name: 'Forex' },
+        { value: 12, name: 'Gold' },
+        { value: 8, name: 'Forecasts' },
       ]
-    })
+    }
+  ]
+})
   }
 }
 </script>
@@ -145,4 +135,5 @@ export default {
   height: 400px;
   padding: 30px;
 }
+
 </style>

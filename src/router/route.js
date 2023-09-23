@@ -53,8 +53,14 @@ const routes = [
   {
     path: '/components',
     name: '组件',
-    component: () => import('../views/Components.vue'),
-    meta: { icon: '#icon-component' }
+    meta: { icon: '#icon-component' },
+    children: [
+      {
+        path: '/components/keyboardChart',
+        name: '键盘图表',
+        component: () => import('../views/Components/keyboardChart.vue')
+      }
+    ]
   },
   {
     path: '/charts',

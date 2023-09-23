@@ -1,75 +1,32 @@
 <template>
-  <el-table class="drag-table" :data="tableData">
-    <el-table-column fixed type="index" width="50" />
-    <el-table-column prop="date" label="Date" width="150" />
-    <el-table-column prop="name" label="Name" width="120" />
-    <el-table-column prop="state" label="State" width="120" />
-    <el-table-column prop="city" label="City" width="120" />
-    <el-table-column prop="address" label="Address" width="600" />
-    <el-table-column prop="zip" label="Zip" width="120" />
-    <el-table-column fixed="right" label="Operations" width="120">
-      <template #default="scope">
-        <el-button link type="primary" size="small" @click.prevent="deleteRow(scope.$index)">
-          Remove
-        </el-button>
-      </template>
-    </el-table-column>
+  <el-table :data="tableData" border style="width: 100%">
+    <el-table-column prop="date" label="Date" width="180" />
+    <el-table-column prop="name" label="Name" width="180" />
+    <el-table-column prop="address" label="Address" />
   </el-table>
-  <el-button class="mt-4" style="width: 100%" @click="onAddItem">Add Item</el-button>
 </template>
-<script lang="ts" setup>
-import { ref } from 'vue'
-import dayjs from 'dayjs'
 
-const now = new Date()
-
-const tableData = ref([
+<script setup>
+const tableData = [
   {
-    date: '2016-05-01',
+    date: '2016-05-03',
     name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036'
+    address: 'No. 189, Grove St, Los Angeles'
   },
   {
     date: '2016-05-02',
     name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036'
+    address: 'No. 189, Grove St, Los Angeles'
   },
   {
-    date: '2016-05-03',
+    date: '2016-05-04',
     name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036'
+    address: 'No. 189, Grove St, Los Angeles'
+  },
+  {
+    date: '2016-05-01',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles'
   }
-])
-
-const deleteRow = (index) => {
-  tableData.value.splice(index, 1)
-}
-
-const onAddItem = () => {
-  now.setDate(now.getDate() + 1)
-  tableData.value.push({
-    date: dayjs(now).format('YYYY-MM-DD'),
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036'
-  })
-}
+]
 </script>
-<style scoped>
- .drag-table{
-  margin-left: 180px;
-  width: 80%
- }
-</style>
-

@@ -68,8 +68,6 @@ export default {
 <style scoped>
 .dashboard-editor-container {
   background-color: rgb(208, 226, 228);
-  margin-left: 200px;
-
 }
 .dashboard-editor-row {
   top: 30px;

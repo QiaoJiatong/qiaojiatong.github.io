@@ -30,6 +30,7 @@
 
 <script setup>
 import { ref } from 'vue'
+const colors = ref(['#99A9BF', '#F7BA2A', '#FF9900'])
 const tableData = ref([
   {
     date: '2016-05-03',
@@ -80,9 +81,4 @@ const editRow = (row) => {
   row.editStatus = !row.editStatus
 }
 </script>
-<style scoped>
-.InlineEdit-table {
-  margin-left: 180px;
-  width: 85%;
-}
-</style>
+<style scoped></style>

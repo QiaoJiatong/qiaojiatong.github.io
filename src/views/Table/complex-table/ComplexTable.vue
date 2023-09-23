@@ -1,12 +1,12 @@
 <template>
-  <div class="complex-table">
+  <div>
     <el-button @click="resetDateFilter">reset date filter</el-button>
     <el-button @click="clearFilter">reset all filters</el-button>
     <el-input v-model="search" size="small" placeholder="Type to search" style="width: 300px" />
     <el-button text type="primary" @click="editRow(null, form)"> Add </el-button>
     <el-checkbox v-model="showReviewer" style="padding: 10px">reviewer</el-checkbox>
     <el-table ref="tableRef" row-key="date" :data="filterTableData" style="width: 100%">
-      <el-table-column type="index" label="ID" width="80" sortable/>
+      <el-table-column type="index" label="ID" width="80" sortable />
       <el-table-column
         prop="date"
         label="Date"
@@ -64,7 +64,7 @@
           <el-button text type="primary" @click="changeStatus(scope.row)" style="width: 60px">
             {{ scope.row.status === 'draft' ? 'published' : 'draft' }}
           </el-button>
-          <el-button size="small" type="danger" @click="tableHandleDelete(scope.$index, scope.row)"
+          <el-button link type="danger" size="small" @click.prevent="deleteRow(scope.$index)"
             >Delete</el-button
           >
         </template>
@@ -183,9 +183,8 @@ const saveEditedContent = () => {
   dialogFormVisible.value = false
 }
 
-const tableHandleDelete = (index, row) => {
-  tableData.value = tableData.value.filter((item) => item !== row)
-  console.log(index)
+const deleteRow = (index) => {
+  tableData.value.splice(index, 1)
 }
 
 const tableData = ref([
@@ -287,8 +286,4 @@ const filterArray = (arr, param) => {
   return newArr
 }
 </script>
-<style scoped>
-.complex-table {
-  margin-left: 180px;
-}
-</style>
+<style scoped></style>

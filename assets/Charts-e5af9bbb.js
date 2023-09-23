@@ -1,0 +1,1 @@
+import{_ as e}from"./index-3d1715a8.js";const t={name:"Charts"};function r(n,o,s,a,c,_){return Vue.openBlock(),Vue.createElementBlock("div",null,"Charts")}const u=e(t,[["render",r]]);export{u as default};

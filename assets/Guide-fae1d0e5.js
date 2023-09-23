@@ -1,0 +1,1 @@
+import{_ as o}from"./index-3d1715a8.js";const t={name:"Guide"},n=Vue.createElementVNode("div",null,"Guide",-1);function r(c,u,s,_,a,d){const e=Vue.resolveComponent("RouterView");return Vue.openBlock(),Vue.createElementBlock(Vue.Fragment,null,[n,Vue.createVNode(e)],64)}const l=o(t,[["render",r]]);export{l as default};

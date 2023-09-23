@@ -1,0 +1,1 @@
+import{_ as e}from"./index-3d1715a8.js";const t={name:"create"};function c(r,n,o,a,s,_){return Vue.openBlock(),Vue.createElementBlock("div",null,"create")}const u=e(t,[["render",c]]);export{u as default};

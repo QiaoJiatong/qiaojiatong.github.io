@@ -1,0 +1,1 @@
+import{_ as e}from"./index-3d1715a8.js";const t={name:"list"};function n(o,s,c,r,a,l){return Vue.openBlock(),Vue.createElementBlock("div",null,"list")}const i=e(t,[["render",n]]);export{i as default};

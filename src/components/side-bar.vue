@@ -1,10 +1,11 @@
 <template>
   <el-aside width="200px">
-    <el-menu
+  <el-menu
       active-text-color="#ffd04b"
       background-color="#545c64"
       class="el-menu-vertical-demo"
-      default-active="/dashboard"
+      :collapse="isCollapse"
+      :default-active="$route.path"
       text-color="#fff"
       @open="handleOpen"
       @close="handleClose"
@@ -41,7 +42,8 @@ export default {
   name: 'SideBar',
   data() {
     return {
-      routes: routes
+      routes: routes,
+      isCollapse: false
     }
   },
   methods: {
@@ -53,22 +55,22 @@ export default {
     },
     clickMenuItem(route) {
       this.$router.push(route)
-    },
+    }
   }
 }
 </script>
 
 <style scoped>
-.el-aside {
-  height: 100vh;
+.el-aside{
   position: fixed;
+  height: 100vh;
   top: 0;
   left: 0;
   bottom: 0;
 }
-
 .el-menu {
   min-height: 100%;
+ 
 }
 
 .el-menu-item .icon-font,
@@ -78,5 +80,9 @@ export default {
   text-align: center;
   font-size: 18px;
   vertical-align: middle;
+}
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
 }
 </style>

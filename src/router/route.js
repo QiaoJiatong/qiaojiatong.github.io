@@ -1,3 +1,5 @@
+import ComplexTable from '../views/Table/complex-table/ComplexTable.vue'
+
 const routes = [
   {
     path: '/dashboard',
@@ -8,7 +10,7 @@ const routes = [
   {
     path: '/documentation',
     name: '文档',
-    component: () => import('../views/documentation.vue'),
+    component: () => import('../views/Documentation.vue'),
     meta: { icon: 'Document' }
   },
   {
@@ -58,15 +60,21 @@ const routes = [
       {
         path: '/components/keyboardChart',
         name: '键盘图表',
-        component: () => import('../views/Components/keyboardChart.vue')
+        component: () => import('../views/Components/KeyboardChart.vue')
       }
     ]
   },
   {
     path: '/charts',
     name: '图表',
-    component: () => import('../views/Charts.vue'),
-    meta: { icon: 'Histogram' }
+    meta: { icon: 'Histogram' },
+    children: [
+      {
+        path: '/charts/KeyChart',
+        name: '图表1',
+        component: () => import('../views/charts/KeyChart.vue')
+      }
+    ]
   },
   {
     path: '/nested-Routes',
@@ -97,7 +105,7 @@ const routes = [
       {
         path: '/complexTable',
         name: '查询表格',
-        component: () => import('../views/Table/complex-table/ComplexTable.vue')
+        component: ComplexTable
       }
     ]
   },

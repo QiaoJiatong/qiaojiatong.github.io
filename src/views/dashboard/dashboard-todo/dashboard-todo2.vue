@@ -29,7 +29,7 @@
         v-for="btn in statusBtns"
         :key="btn"
         text
-        :type="selectedDisplay === btn ? 'primary' : 'plain'"
+        :type="selectedDisplay === btn ? 'primary' : ''"
         size="small"
         :bg="selectedDisplay === btn"
         @click="selectedDisplay = btn"

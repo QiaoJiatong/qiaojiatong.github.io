@@ -10,7 +10,7 @@
       <el-table-column
         prop="date"
         label="Date"
-        width="120"
+        width="160"
         :filters="filterDate"
         :filter-method="filterHandler"
       />
@@ -93,6 +93,9 @@
         <el-form-item label="Author: " :label-width="formLabelWidth">
           <el-input v-model="form.name" autocomplete="off" />
         </el-form-item>
+        <el-form-item label="reviewer: " :label-width="formLabelWidth">
+          <el-input v-model="form.reviewer" autocomplete="off" />
+        </el-form-item>
         <el-form-item label="Imp: " :label-width="formLabelWidth">
           <el-rate v-model="form.imp" />
         </el-form-item>
@@ -103,7 +106,8 @@
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogFormVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="saveEditedContent"> Confirm </el-button>
+          <el-button type="primary" @click="saveEditedContent"> ConfirmDraft </el-button>
+          <el-button type="primary" @click="publishEdit"> Publish </el-button>
         </span>
       </template>
     </el-dialog>
@@ -134,7 +138,9 @@ const form = reactive({
   name: '',
   date: '',
   imp: null,
-  remark: ''
+  remark: '',
+  reviewer: '',
+  status: ''
 })
 
 const resetDateFilter = () => {
@@ -156,6 +162,7 @@ const editRow = (index, row) => {
   if (index === null) {
     popup.value = 'addPop'
     popTitle.value = 'Add'
+    index = tableData.value.length
   } else {
     popup.value = 'editPop'
     popTitle.value = 'edit'
@@ -166,21 +173,38 @@ const editRow = (index, row) => {
   form.title = row.title
   form.name = row.name
   form.remark = row.remark
+  form.status = row.status
+  form.reviewer = row.reviewer
   editIndex.value = index
   dialogFormVisible.value = true
 }
 const saveEditedContent = () => {
   if (popup.value === 'addPop') {
-    tableData.value.push(form)
-  } else {
-    tableData.value[editIndex.value].title = form.title
-    tableData.value[editIndex.value].name = form.name
-    tableData.value[editIndex.value].date = form.date
-    tableData.value[editIndex.value].type = form.type
-    tableData.value[editIndex.value].imp = form.imp
-    tableData.value[editIndex.value].remark = form.remark
+    const newItem = {
+      title: '',
+      name: '',
+      date: '',
+      imp: null,
+      remark: '',
+      reviewer: '',
+      status: ''
+    }
+    tableData.value.push(newItem)
   }
+  tableData.value[editIndex.value].title = form.title
+  tableData.value[editIndex.value].name = form.name
+  tableData.value[editIndex.value].date = form.date
+  tableData.value[editIndex.value].type = form.type
+  tableData.value[editIndex.value].imp = form.imp
+  tableData.value[editIndex.value].remark = form.remark
+  tableData.value[editIndex.value].status = form.status
+  tableData.value[editIndex.value].reviewer = form.reviewer
+  tableData.value[editIndex.value].status = 'draft'
   dialogFormVisible.value = false
+}
+const publishEdit = () => {
+  saveEditedContent()
+  tableData.value[editIndex.value].status = 'published'
 }
 
 const deleteRow = (index) => {
@@ -189,7 +213,7 @@ const deleteRow = (index) => {
 
 const tableData = ref([
   {
-    date: '2016-05-03',
+    date: '2023/09/15 06:07',
     name: 'Joe',
     title: 'No. 189, Los Angeles',
     type: 'China',
@@ -199,7 +223,7 @@ const tableData = ref([
     reviewer: 'Jack'
   },
   {
-    date: '2016-05-01',
+    date: '2023-09-08 05:08',
     name: 'Tom',
     title: 'No. 189, Grove, Los Angeles',
     type: 'USA',
@@ -209,7 +233,7 @@ const tableData = ref([
     reviewer: 'Larry'
   },
   {
-    date: '2016-05-04',
+    date: '2023-09-28 07:27',
     name: 'marry',
     title: 'No. 189, Grove St, ',
     type: 'EuroZone',
@@ -219,7 +243,7 @@ const tableData = ref([
     reviewer: 'Mary'
   },
   {
-    date: '2016-05-01',
+    date: '2023-09-08 06:21',
     name: 'Tom',
     title: 'No. 189, Grove St,Angeles',
     type: 'Japan',

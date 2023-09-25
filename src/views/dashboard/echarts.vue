@@ -1,9 +1,17 @@
 <template>
-  <div ref="main" style="width: 100%; height: 400px"></div>
+  <el-card shadow="hover" class="echarts-card" style="margin-top: 20px; margin-left: 30px">
+    <div ref="main" style="width: 100%; height: 400px"></div>
+  </el-card>
   <div style="display: flex">
-    <div ref="radar" class="item-chart"></div>
-    <div ref="roseDiagram" class="item-chart"></div>
-    <div ref="barChart" class="item-chart"></div>
+    <el-card shadow="hover" class="echarts-card">
+      <div ref="radar" class="item-chart"></div>
+    </el-card>
+    <el-card shadow="hover" class="echarts-card">
+      <div ref="roseDiagram" class="item-chart"></div>
+    </el-card>
+    <el-card shadow="hover" class="echarts-card">
+      <div ref="barChart" class="item-chart"></div>
+    </el-card>
   </div>
 </template>
 <script>
@@ -13,6 +21,11 @@ export default {
   mounted() {
     const myEchart = echarts.init(this.$refs.main)
     myEchart.setOption({
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: { type: 'cross' }
+      },
+      legend:{},
       xAxis: {
         type: 'category',
         data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -24,12 +37,14 @@ export default {
         {
           data: [320, 232, 401, 334, 290, 230, 320],
           type: 'line',
+          name: 'expected',
           smooth: true,
           color: 'red'
         },
         {
           data: [220, 332, 201, 234, 310, 150, 120],
           type: 'line',
+          name: 'actual',
           smooth: true,
           color: 'blue'
         }
@@ -43,12 +58,12 @@ export default {
       radar: {
         // shape: 'circle',
         indicator: [
-          { name: 'Sales', max: 6500 },
-          { name: 'Administration', max: 16000 },
-          { name: 'Information Technology', max: 30000 },
-          { name: 'Customer Support', max: 38000 },
-          { name: 'Development', max: 52000 },
-          { name: 'Marketing', max: 25000 }
+          { name: 'Sales', max: 10000 },
+          { name: 'Administration', max: 10000 },
+          { name: 'Information Technology', max: 10000 },
+          { name: 'Customer Support', max: 10000 },
+          { name: 'Development', max: 10000 },
+          { name: 'Marketing', max: 10000 }
         ]
       },
       series: [
@@ -57,15 +72,15 @@ export default {
           type: 'radar',
           data: [
             {
-              value: [6200, 14000, 30000, 35000, 40000, 28000],
+              value: [6200, 8000, 6000, 8500, 7000, 9800],
               name: 'Allocated Budget'
             },
             {
-              value: [5000, 10000, 28000, 26000, 32000, 21000],
+              value: [5000, 5000, 4800, 4000, 3200, 7100],
               name: 'Actual Spending'
             },
             {
-              value: [1200, 4000, 2000, 7000, 8000, 7000],
+              value: [1200, 3000, 1200, 4500, 3800, 2700],
               name: 'Actual surplus'
             }
           ]
@@ -94,46 +109,48 @@ export default {
     })
     const myRoseDiagram = echarts.init(this.$refs.roseDiagram)
     myRoseDiagram.setOption({
-  legend: {
-    top: 'bottom'
-  },
-  toolbox: {
-    show: true,
-    feature: {
-      mark: { show: true },
-      dataView: { show: true, readOnly: false },
-      restore: { show: true },
-      saveAsImage: { show: true }
-    }
-  },
-  series: [
-    {
-      name: 'Radius Mode',
-      type: 'pie',
-      radius: [10, 80],
-      center: ['50%', '50%'],
-      roseType: 'area',
-      itemStyle: {
-        borderRadius: 5
+      legend: {
+        top: 'bottom'
       },
-      data: [
-        { value: 40, name: 'Industries' },
-        { value: 28, name: 'Technology' },
-        { value: 18, name: 'Forex' },
-        { value: 12, name: 'Gold' },
-        { value: 8, name: 'Forecasts' },
+      toolbox: {
+        show: true,
+        feature: {
+          mark: { show: true },
+          dataView: { show: true, readOnly: false },
+          restore: { show: true },
+          saveAsImage: { show: true }
+        }
+      },
+      series: [
+        {
+          name: 'Radius Mode',
+          type: 'pie',
+          radius: [10, 80],
+          center: ['50%', '50%'],
+          roseType: 'area',
+          itemStyle: {
+            borderRadius: 5
+          },
+          data: [
+            { value: 40, name: 'Industries' },
+            { value: 28, name: 'Technology' },
+            { value: 18, name: 'Forex' },
+            { value: 12, name: 'Gold' },
+            { value: 8, name: 'Forecasts' }
+          ]
+        }
       ]
-    }
-  ]
-})
+    })
   }
 }
 </script>
 <style scoped>
 .item-chart {
-  width: 30%;
-  height: 400px;
-  padding: 30px;
+  width: 100%;
+  height: 300px;
 }
-
+.echarts-card {
+  width: 95%;
+  margin: 10px;
+}
 </style>

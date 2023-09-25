@@ -1,13 +1,11 @@
 <template>
-  <div>
-    <el-container>
-      <SideBar />
+  <el-container>
+    <SideBar />
       <el-main class="router-view">
         <!-- <myTag /> -->
         <router-view />
       </el-main>
-    </el-container>
-  </div>
+  </el-container>
 </template>
 <script>
 import SideBar from '@/components/side-bar.vue'
@@ -19,7 +17,7 @@ export default {
 }
 </script>
 <style scoped>
-.router-view {
-  margin-left: 180px;
+.router-view{
+  margin-left: 170px;
 }
 </style>

@@ -5,7 +5,7 @@
       <el-progress :percentage="item.percentage" :color="item.color" />
     </template>
     <div>ESLint</div>
-    <el-progress percentage="100" :color="customColorMethod" />
+    <el-progress :percentage="100" :color="customColorMethod" />
   </div>
 </template>
 
@@ -30,6 +30,6 @@ const customColorMethod = (percentage) => {
 </script>
 <style scoped>
 .demo-progress .el-progress--line {
-  width: 350px;
+  width: 300px;
 }
 </style>

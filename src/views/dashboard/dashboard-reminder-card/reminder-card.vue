@@ -1,7 +1,7 @@
 <template>
   <el-card class="box-card">
     <div class="dashboard-reminderCard-img">
-      <img class="reminderCard-img" src="./dashboards.png" />
+      <img class="reminderCard-img" src="/dashboards.png" />
     </div>
     <div class="dashboard-reminderCard-gif">
       <div class="reminderCard-gif"></div>
@@ -51,7 +51,7 @@ import CardProgress from './card-progress.vue'
   align-items: center;
 }
 .dashboard-reminderCard-gif .reminderCard-gif {
-  background-image: url('./dashboardCard.gif');
+  background-image: url('/dashboardCard.gif');
   background-size: 100% 100%;
   width: 50px;
   height: 50px;
@@ -67,9 +67,6 @@ import CardProgress from './card-progress.vue'
   font-size: 18px;
   font-weight: 700;
   color: rgb(67, 194, 145);
-}
-.dashboard-reminderCard-progress {
-  margin-left: -6px;
 }
 .dashboard-reminderCard-gif:hover .reminderCard-gif {
   transform-origin: top right; /* 设置旋转的原点为右上角 */

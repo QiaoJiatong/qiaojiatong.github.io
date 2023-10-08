@@ -1,22 +1,40 @@
 <template>
   <div>
-    <el-button @click="resetDateFilter">reset date filter</el-button>
-    <el-button @click="clearFilter">reset all filters</el-button>
-    <el-input v-model="search" size="small" placeholder="Type to search" style="width: 300px" />
-    <el-button text type="primary" @click="editRow(null, form)"> Add </el-button>
-    <el-checkbox v-model="showReviewer" style="padding: 10px">reviewer</el-checkbox>
-    <el-table ref="tableRef" row-key="date" :data="filterTableData" style="width: 100%">
-      <el-table-column type="index" label="ID" width="80" sortable />
+    <div style="height: 35px; margin-bottom: 10px">
+      <el-button type="primary" @click="clearFilter" class="condition-btn"
+        >reset all filters</el-button
+      >
+      <el-input
+        v-model="search"
+        type="password"
+        placeholder="Type to search"
+        class="condition-btn"
+        style="width: 300px"
+      />
+      <el-button type="primary" class="condition-btn" @click="editRow(null, form)"> Add </el-button>
+      <el-checkbox v-model="showReviewer" class="condition-btn"> reviewer </el-checkbox>
+    </div>
+    <el-table
+      ref="tableRef"
+      row-key="date"
+      :data="filterTableData"
+      style="width: 100%"
+      :border="true"
+    >
+      <el-table-column type="index" label="ID" width="60" sortable align="center" />
       <el-table-column
         prop="date"
         label="Date"
         width="160"
         :filters="filterDate"
         :filter-method="filterHandler"
+        align="center"
       />
       <el-table-column prop="title" label="Title" :formatter="formatter">
         <template #default="scope">
-          <div @click="editRow(scope.$index, scope.row)">{{ scope.row.title }}</div>
+          <div @click="editRow(scope.$index, scope.row)" class="table-titleItem">
+            {{ scope.row.title }}
+          </div>
           <el-tag>{{ scope.row.type }}</el-tag>
         </template>
       </el-table-column>
@@ -26,14 +44,22 @@
         width="100"
         :filters="filterName"
         :filter-method="filterHandler"
+        align="center"
       />
-      <el-table-column v-if="showReviewer" prop="reviewer" label="Reviewer" width="180" />
+      <el-table-column
+        v-if="showReviewer"
+        prop="reviewer"
+        label="Reviewer"
+        width="100"
+        align="center"
+      />
       <el-table-column
         prop="imp"
         label="Imp"
-        width="180"
+        width="130"
         :filters="filterImp"
         :filter-method="filterHandler"
+        align="center"
       >
         <template #default="scope">
           <el-rate v-model="scope.row.imp" :colors="colors" style="pointer-events: none" />
@@ -47,26 +73,28 @@
         :filters="filterStatus"
         :filter-method="filterHandler"
         filter-placement="bottom-end"
+        align="center"
       >
         <template #default="scope">
-          <el-status
-            :type="scope.row.status === 'published' ? '' : 'success'"
+          <el-button
+            :type="scope.row.status === 'published' ? 'primary' : ''"
             disable-transitions
-            >{{ scope.row.status }}</el-status
+            style="width: 70px"
+            >{{ scope.row.status }}</el-button
           >
         </template>
       </el-table-column>
-      <el-table-column label="Operations">
+      <el-table-column label="Operations" align="center" width="260">
         <template #default="scope">
-          <el-button text type="primary" @click="editRow(scope.$index, scope.row)">
-            Edit
-          </el-button>
-          <el-button text type="primary" @click="changeStatus(scope.row)" style="width: 60px">
+          <el-button type="primary" @click="editRow(scope.$index, scope.row)"> Edit </el-button>
+          <el-button
+            :type="scope.row.status === 'draft' ? 'primary' : ''"
+            @click="changeStatus(scope.row)"
+            style="width: 70px"
+          >
             {{ scope.row.status === 'draft' ? 'published' : 'draft' }}
           </el-button>
-          <el-button link type="danger" size="small" @click.prevent="deleteRow(scope.$index)"
-            >Delete</el-button
-          >
+          <el-button type="danger" @click.prevent="deleteRow(scope.$index)">Delete</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -87,20 +115,14 @@
             value-format="YYYY-MM-DD HH:mm"
           />
         </el-form-item>
-        <el-form-item label="Title: " :label-width="formLabelWidth">
-          <el-input v-model="form.title" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="Author: " :label-width="formLabelWidth">
-          <el-input v-model="form.name" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="reviewer: " :label-width="formLabelWidth">
-          <el-input v-model="form.reviewer" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="Imp: " :label-width="formLabelWidth">
-          <el-rate v-model="form.imp" />
-        </el-form-item>
-        <el-form-item label="Remark: " :label-width="formLabelWidth">
-          <el-input v-model="form.remark" type="textarea" />
+        <el-form-item
+          v-for="item in formData"
+          :key="item"
+          :label="item + ': '"
+          :label-width="formLabelWidth"
+        >
+          <el-rate v-if="item === 'imp'" v-model="form[`${item}`]" :colors="colors" />
+          <el-input v-else v-model="form[`${item}`]" autocomplete="off" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -133,6 +155,7 @@ const editIndex = ref(0)
 const colors = ref(['#99A9BF', '#F7BA2A', '#FF9900'])
 const popup = ref('')
 const popTitle = ref('')
+const formData = ['title', 'name', 'imp', 'reviewer', 'remark']
 const form = reactive({
   title: '',
   name: '',
@@ -143,9 +166,6 @@ const form = reactive({
   status: ''
 })
 
-const resetDateFilter = () => {
-  tableRef.value.clearFilter(['date'])
-}
 // TODO: improvement typing when refactor table
 const clearFilter = () => {
   tableRef.value.clearFilter()
@@ -191,6 +211,7 @@ const saveEditedContent = () => {
     }
     tableData.value.push(newItem)
   }
+  // todo: 直接 = {...form}
   tableData.value[editIndex.value].title = form.title
   tableData.value[editIndex.value].name = form.name
   tableData.value[editIndex.value].date = form.date
@@ -310,4 +331,20 @@ const filterArray = (arr, param) => {
   return newArr
 }
 </script>
-<style scoped></style>
+<style scoped>
+.condition-btn {
+  height: 100%;
+  margin: 5px;
+}
+.table-titleItem:hover {
+  cursor: pointer;
+  color: rgb(234, 44, 44);
+  font-style: normal;
+  font-family: 'Microsoft YaHei';
+}
+.table-titleItem {
+  color: rgb(50, 76, 220);
+  font-style: normal;
+  font-family: 'Microsoft YaHei';
+}
+</style>

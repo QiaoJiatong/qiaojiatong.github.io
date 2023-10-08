@@ -1,14 +1,14 @@
 <template>
   <div class="common-layout">
     <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
-      <el-tab-pane label="myIcons" name="first" class="Icons-box">
-        <div v-for="item in iconsData" :key="item" class="Icons-Icon">
+      <el-tab-pane label="myIcons" name="first" class="icons-box">
+        <div v-for="item in iconsData" :key="item" class="icons-icon">
           <icon-font :icon-name="item" @click="copyIcon(item)" />
           <div>{{ item }}</div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="ElementIcons" name="second" class="Icons-box">
-        <div v-for="item in ElementIconsData" :key="item" class="Icons-Icon">
+      <el-tab-pane label="ElementIcons" name="second" class="icons-box">
+        <div v-for="item in elementIconsData" :key="item" class="icons-icon">
           <icon-font :icon-name="item" @click="copyIcon(item)" />
           <div>{{ item }}</div>
         </div>
@@ -17,6 +17,7 @@
   </div>
 </template>
 <script>
+import { ElMessage } from 'element-plus'
 export default {
   name: 'myIcons',
   data() {
@@ -41,7 +42,7 @@ export default {
         'WarnTriangleFilled',
         'QuestionFilled'
       ],
-      ElementIconsData: [
+      elementIconsData: [
         'Unlock',
         'Plus',
         'Minus',
@@ -74,13 +75,17 @@ export default {
   },
   methods: {
     copyIcon(item) {
-      let icon = `"<icon-font :icon-name="${item}"/>"`
+      const icon = `"<icon-font :icon-name="${item}"/>"`
       this.$copyText(icon).then(
         function () {
-          alert('已复制到剪切板')
+          ElMessage({
+            showClose: true,
+            message: '复制成功',
+            type: 'success'
+          })
         },
         function () {
-          alert('复制失败')
+          ElMessage('复制失败')
         }
       )
     },
@@ -91,18 +96,23 @@ export default {
 }
 </script>
 <style scoped>
-.Icons-Icon {
+.icons-icon {
   display: flex;
   margin: 15px;
   padding: 10px;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  cursor: pointer;
+  width: 100px;
 }
-.Icons-Icon .icon-font {
+.icons-icon:hover {
+  color: rgb(29, 29, 243);
+}
+.icons-icon .icon-font {
   font-size: 35px;
 }
-.Icons-box {
+.icons-box {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

@@ -24,7 +24,7 @@
       </div>
     </el-checkbox-group>
     <div class="dashboard-todo-button">
-      <div style="font-size: 12px; margin-right: 45px">{{ activeItems.length }} Items left</div>
+      <div style="font-size: 12px; margin-right: 25px">{{ activeItems.length }} Items left</div>
       <el-button
         v-for="btn in statusBtns"
         :key="btn"
@@ -77,8 +77,12 @@ const displayedItems = computed(() => {
 const newItem = ref('')
 
 const addNewItem = () => {
-  allItems.value.push(newItem.value)
-  newItem.value = ''
+  if (!!newItem.value.trim() === false) {
+    return
+  } else {
+    allItems.value.push(newItem.value)
+    newItem.value = ''
+  }
 }
 
 const isIndeterminate = computed(
@@ -97,7 +101,7 @@ const dashboardTodoDelete = (deletedItem) => {
 <style scoped>
 .dashboard-todo {
   max-height: 500px;
-  width: 30%;
+  width: 25%;
   margin-top: 30px;
   margin-left: 10px;
   padding: 10px;

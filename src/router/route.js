@@ -5,7 +5,7 @@ const routes = [
     path: '/dashboard',
     name: '首页',
     meta: { icon: 'House' },
-    component: () => import('../views/dashboard/dashboard.vue')
+    component: () => import('../views/dashboard/Dashboard.vue')
   },
   {
     path: '/documentation',
@@ -84,7 +84,7 @@ const routes = [
   },
   {
     path: '/myTable',
-    name: 'MyTable',
+    name: '表格',
     meta: { icon: 'Grid' },
     children: [
       {
@@ -100,7 +100,7 @@ const routes = [
       {
         path: '/inlineEdit',
         name: '内联表格',
-        component: () => import('../views/Table/inline-edit/InlineEdit.vue')
+        component: () => import('../views/Table/inline-edit/InlineEditTable.vue')
       },
       {
         path: '/complexTable',

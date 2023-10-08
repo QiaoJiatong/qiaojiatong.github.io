@@ -15,7 +15,7 @@
   </el-card>
 </template>
 <script setup>
-import CardProgress from './card-progress.vue'
+import CardProgress from './CardProgress.vue'
 </script>
 <style scoped>
 .box-card {
@@ -34,8 +34,13 @@ import CardProgress from './card-progress.vue'
   align-items: center;
 }
 .dashboard-reminderCard-img:hover .reminderCard-img {
+  transition: transform 0.5s;
   transform: scale(1.1, 1.1);
   filter: contrast(130%);
+}
+
+.dashboard-reminderCard-img:not(:hover) .reminderCard-img {
+  transition: transform 0.5s;
 }
 .dashboard-reminderCard-gif {
   margin-top: -20px;
@@ -58,7 +63,7 @@ import CardProgress from './card-progress.vue'
   border-radius: 50%;
   position: absolute;
   z-index: 9999;
-  transition: transform 0.6s; /* 添加过渡效果，使旋转动画平滑 */
+  transition: transform 0.6s;
 }
 .dashboard-reminderCard-span {
   margin-top: -20px;
@@ -69,12 +74,12 @@ import CardProgress from './card-progress.vue'
   color: rgb(67, 194, 145);
 }
 .dashboard-reminderCard-gif:hover .reminderCard-gif {
-  transform-origin: top right; /* 设置旋转的原点为右上角 */
-  transform: rotate(-90deg); /* 悬浮时进行90度的旋转 */
+  transform-origin: top right;
+  transform: rotate(-90deg);
 }
 .dashboard-reminderCard-gif:not(:hover) .reminderCard-gif {
-  transition: transform 0.6s; /* 添加过渡效果，使返回动画平滑 */
-  transform-origin: top right; /* 设置旋转的原点为右上角 */
-  transform: rotate(0deg); /* 鼠标离开时返回原始状态，即无旋转 */
+  transition: transform 0.6s;
+  transform-origin: top right;
+  transform: rotate(0deg);
 }
 </style>

@@ -4,32 +4,30 @@
     target="_blank"
     class="github-corner"
   >
-    <icon-font
-      class="dashboard-card-gitHub"
-      icon-name="#icon-github"
-    />
+    <icon-font class="dashboard-card-gitHub" icon-name="#icon-github" />
   </a>
 </template>
 <script>
 export default {
-  name: 'DashboardGitHub'
+  name: 'DashboardGithub'
 }
 </script>
 <style scoped>
 .dashboard-card-gitHub {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 20px;
-  margin-right: 26px;
+  width: 30px;
+  height: 30px;
+  margin-bottom: 16px;
+  margin-right: 15px;
   color: white;
   transform: rotate(45deg);
 }
 .github-corner {
   display: flex;
-  right: 27px;
+  margin-top: -10px;
+  right: 0px;
   position: absolute;
-  width: 120px;
-  height: 120px;
+  width: 80px;
+  height: 80px;
   background: linear-gradient(to top right, transparent 50%, rgb(105, 207, 160) 50%);
   flex-wrap: wrap;
   flex-direction: column-reverse;

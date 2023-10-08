@@ -1,30 +1,56 @@
 <template>
-    <el-col class="dashboard-card-col" :span="5">
+  <el-row class="dashboard-editor-row" :gutter="20">
+    <el-col v-for="(item, index) in cardData" :key="index" :span="6">
       <el-card shadow="hover">
         <div class="card-content">
-          <div class="icon-wrapper dashboard-card" :class="`icon__${iconName}`">
-            <icon-font class="dashboard-card-icon" :icon-name="iconName" />
+          <div class="icon-wrapper dashboard-card" :class="`icon__${item.iconName}`">
+            <icon-font class="dashboard-card-icon" :icon-name="item.iconName" />
           </div>
           <div class="card-panel-description">
-            <div class="card-panel-text">{{ cardText }}</div>
-            <span class="card-panel-num">{{ cardNum }}</span>
+            <div class="card-panel-text">{{ item.cardText }}</div>
+            <span class="card-panel-num">{{ item.cardNum }}</span>
           </div>
         </div>
       </el-card>
     </el-col>
+  </el-row>
 </template>
 <script>
 export default {
   name: 'DashboardCard',
-  props: {
-    iconName: String,
-    cardText: String,
-    cardNum: Number
+  data() {
+    return {
+      cardData: [
+        {
+          iconName: '#icon-users',
+          cardText: 'New Visits',
+          cardNum: 457399
+        },
+        {
+          iconName: '#icon-money',
+          cardText: 'Purchases',
+          cardNum: 5457468
+        },
+        {
+          iconName: 'ChatDotSquare',
+          cardText: 'Messages',
+          cardNum: 547589
+        },
+        {
+          iconName: 'ShoppingCart',
+          cardText: 'Shoppings',
+          cardNum: 856759
+        }
+      ]
+    }
   }
 }
 </script>
 
 <style scoped>
+.dashboard-editor-row {
+  margin-top: 50px;
+}
 .dashboard-card-icon {
   font-size: 48px;
 }
@@ -90,9 +116,5 @@ export default {
   color: rgba(0, 0, 0, 0.45);
   font-size: 16px;
   margin-bottom: 12px;
-}
-
-.dashboard-card-col {
-  margin: 20px;
 }
 </style>

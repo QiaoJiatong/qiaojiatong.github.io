@@ -1,8 +1,8 @@
 <template>
   <el-table :data="tableData" class="dashboard-table">
-    <el-table-column prop="order_No" label="order_No" width="260" />
-    <el-table-column prop="price" label="Price" width="100" />
-    <el-table-column prop="status" label="Status">
+    <el-table-column prop="order_No" label="order_No" />
+    <el-table-column prop="price" label="Price" width="100" align="center" />
+    <el-table-column prop="status" label="Status" width="100" align="center">
       <template #default="scope">
         <div :class="`table_${scope.row.status}`" class="table-tag">
           <span>{{ scope.row.status }}</span>
@@ -12,7 +12,7 @@
   </el-table>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 const tableData = [
   {
     order_No: '7a4ED485-1181-360e-fB22-0eEe44',
@@ -52,22 +52,22 @@ const tableData = [
 ]
 </script>
 <style scoped>
-.dashboard-table{
-    height: 100%;
-    width: 40%;
-    margin-top: 30px;
-    margin-left: 10px;
+.dashboard-table {
+  height: 100%;
+  width: 50%;
+  margin-top: 30px;
 }
 
 .table-tag {
+  width: 75px;
   display: inline-block;
   padding: 5px 10px;
+  text-align: center;
 }
-.table_success{
+.table_success {
   background-color: #ffeded;
 }
-.table_pending{
+.table_pending {
   background-color: rgb(142, 223, 223);
 }
-
 </style>

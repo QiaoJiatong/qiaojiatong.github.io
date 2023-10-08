@@ -1,5 +1,5 @@
 <template>
-  <div class="demo-progress">
+  <div class="card-progress">
     <template v-for="item in customColors" :key="item">
       <div>{{ item.name }}</div>
       <el-progress :percentage="item.percentage" :color="item.color" />
@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 const customColors = [
   { name: 'Vue', color: '#f56c6c', percentage: 70 },
   { name: 'CSS', color: '#e6a23c', percentage: 18 },
@@ -29,7 +29,7 @@ const customColorMethod = (percentage) => {
 }
 </script>
 <style scoped>
-.demo-progress .el-progress--line {
+.card-progress .el-progress--line {
   width: 300px;
 }
 </style>

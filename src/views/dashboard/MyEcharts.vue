@@ -1,15 +1,16 @@
 <template>
-  <el-card shadow="hover" class="echarts-card" style="margin-top: 20px; margin-left: 30px">
+  <el-card shadow="hover" style="margin-top: 20px;">
     <div ref="main" style="width: 100%; height: 400px"></div>
   </el-card>
-  <div style="display: flex">
-    <el-card shadow="hover" class="echarts-card">
+  <div style="display: flex;margin-top: 20px;">
+    <el-card shadow="hover" class="echarts-card" style="margin-left: 0;">
       <div ref="radar" class="item-chart"></div>
     </el-card>
     <el-card shadow="hover" class="echarts-card">
       <div ref="roseDiagram" class="item-chart"></div>
     </el-card>
     <el-card shadow="hover" class="echarts-card">
+      <!-- 抽象成一个图表组件 -->
       <div ref="barChart" class="item-chart"></div>
     </el-card>
   </div>
@@ -17,7 +18,7 @@
 <script>
 import * as echarts from 'echarts'
 export default {
-  name: 'echart',
+  name: 'MyEcharts',
   mounted() {
     const myEchart = echarts.init(this.$refs.main)
     myEchart.setOption({
@@ -25,8 +26,11 @@ export default {
         trigger: 'axis',
         axisPointer: { type: 'cross' }
       },
-      legend:{},
+      legend: {},
       xAxis: {
+        axisTick: {
+          show: false
+        },
         type: 'category',
         data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
       },
@@ -50,8 +54,8 @@ export default {
         }
       ]
     })
-    const myradar = echarts.init(this.$refs.radar)
-    myradar.setOption({
+    const myRadar = echarts.init(this.$refs.radar)
+    myRadar.setOption({
       legend: {
         data: ['Allocated Budget', 'Actual Spending', 'Actual surplus']
       },
@@ -125,7 +129,7 @@ export default {
         {
           name: 'Radius Mode',
           type: 'pie',
-          radius: [10, 80],
+          radius: [10, 110],
           center: ['50%', '50%'],
           roseType: 'area',
           itemStyle: {
@@ -150,7 +154,7 @@ export default {
   height: 300px;
 }
 .echarts-card {
-  width: 95%;
-  margin: 10px;
+  margin-left: 10px;
+  width: 100%;
 }
 </style>

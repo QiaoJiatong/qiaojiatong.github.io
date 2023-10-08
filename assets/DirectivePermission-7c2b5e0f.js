@@ -1,0 +1,1 @@
+import{_ as e}from"./index-b7a88358.js";const r={name:"DirectivePermission"};function t(i,n,o,s,c,a){return Vue.openBlock(),Vue.createElementBlock("h1",null,"Directive Permission")}const m=e(r,[["render",t]]);export{m as default};

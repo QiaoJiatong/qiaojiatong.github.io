@@ -1,0 +1,1 @@
+import{_ as e}from"./index-b7a88358.js";const o={name:"RolePermission"};function n(s,r,t,c,i,a){return Vue.openBlock(),Vue.createElementBlock("div",null,"Role Permission")}const _=e(o,[["render",n]]);export{_ as default};

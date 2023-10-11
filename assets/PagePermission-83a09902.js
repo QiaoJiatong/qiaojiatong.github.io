@@ -1,0 +1,1 @@
+import{_ as e}from"./index-a1196f30.js";const n={name:"PagePermission"};function o(s,r,t,a,c,i){return Vue.openBlock(),Vue.createElementBlock("h1",null,"Page Permission")}const m=e(n,[["render",o]]);export{m as default};

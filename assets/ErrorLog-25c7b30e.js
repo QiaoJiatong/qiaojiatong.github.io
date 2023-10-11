@@ -1,0 +1,1 @@
+import{_ as e}from"./index-a1196f30.js";const r={name:"errorLog"};function o(t,n,c,s,a,_){return Vue.openBlock(),Vue.createElementBlock("h2",null,"错误日志")}const u=e(r,[["render",o]]);export{u as default};

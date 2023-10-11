@@ -1,0 +1,1 @@
+import{_ as o}from"./index-a1196f30.js";const t={name:"documentation"};function n(c,r,u,a,d,s){const e=Vue.resolveComponent("RouterView");return Vue.openBlock(),Vue.createElementBlock("div",null,[Vue.createTextVNode(" documentation ddd "),Vue.createVNode(e)])}const i=o(t,[["render",n]]);export{i as default};

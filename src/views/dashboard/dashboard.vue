@@ -16,7 +16,7 @@
 <script>
 import DashboardCard from './DashboardCard.vue'
 import DashboardTable from './dashboard-table/DashboardTable.vue'
-import DashboardTodo from './dashboard-todo/dashboard-todo.vue'
+import DashboardTodo from './dashboard-todo/DashboardTodo.vue'
 import reminderCard from './dashboard-reminder-card/ReminderCard.vue'
 import DashboardGithub from './DashboardGithub.vue'
 import MyEcharts from './MyEcharts.vue'

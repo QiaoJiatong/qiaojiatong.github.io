@@ -5,8 +5,7 @@
         class="el-menu-vertical-demo"
         :collapse="isCollapse"
         :default-active="$route.name"
-        @open="handleOpen"
-        @close="handleClose"
+        :@open="handleOpen($route.name)"
       >
         <template v-for="route in routes" :key="route.name">
           <el-sub-menu v-if="route.children" :index="route.name">
@@ -46,12 +45,9 @@ export default {
     }
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log('open: ', key, keyPath)
-      document.title = key
-    },
-    handleClose(key, keyPath) {
-      console.log('close: ', key, keyPath)
+    handleOpen(route) {
+      if (!route) return;
+      document.title = route
     },
     clickMenuItem(path) {
       this.$router.push(path)

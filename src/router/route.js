@@ -23,6 +23,7 @@ const routes = [
     path: '/permission',
     name: '权限测试页',
     meta: { icon: 'Lock' },
+    redirect: '/permission/pagePermission',
     children: [
       {
         path: '/permission/pagePermission',
@@ -86,6 +87,7 @@ const routes = [
     path: '/myTable',
     name: '表格',
     meta: { icon: 'Grid' },
+    redirect: '/dynamicTable',
     children: [
       {
         path: '/dynamicTable',

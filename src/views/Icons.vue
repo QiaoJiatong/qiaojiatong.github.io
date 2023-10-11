@@ -3,13 +3,27 @@
     <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
       <el-tab-pane label="myIcons" name="first" class="icons-box">
         <div v-for="item in iconsData" :key="item" class="icons-icon">
-          <icon-font :icon-name="item" @click="copyIcon(item)" />
+          <el-tooltip
+            class="box-item"
+            effect="dark"
+            :content="`<icon-font :icon-name=${item}/>`"
+            placement="top"
+          >
+            <icon-font :icon-name="item" @click="copyIcon(item)" />
+          </el-tooltip>
           <div>{{ item }}</div>
         </div>
       </el-tab-pane>
       <el-tab-pane label="ElementIcons" name="second" class="icons-box">
         <div v-for="item in elementIconsData" :key="item" class="icons-icon">
-          <icon-font :icon-name="item" @click="copyIcon(item)" />
+          <el-tooltip
+            class="box-item"
+            effect="dark"
+            :content="`<icon-font :icon-name=${item}/>`"
+            placement="top"
+          >
+            <icon-font :icon-name="item" @click="copyIcon(item)" />
+          </el-tooltip>
           <div>{{ item }}</div>
         </div>
       </el-tab-pane>

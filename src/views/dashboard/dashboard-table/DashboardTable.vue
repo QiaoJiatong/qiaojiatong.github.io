@@ -1,8 +1,8 @@
 <template>
   <el-table :data="tableData" class="dashboard-table">
     <el-table-column prop="order_No" label="order_No" />
-    <el-table-column prop="price" label="Price" width="100" align="center" />
-    <el-table-column prop="status" label="Status" width="100" align="center">
+    <el-table-column prop="price" label="Price" width="120" align="center" />
+    <el-table-column prop="status" label="Status" width="120" align="center">
       <template #default="scope">
         <div :class="`table_${scope.row.status}`" class="table-tag">
           <span>{{ scope.row.status }}</span>

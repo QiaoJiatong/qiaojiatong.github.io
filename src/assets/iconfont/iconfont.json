@@ -13,6 +13,13 @@
       "unicode_decimal": 58897
     },
     {
+      "icon_id": "622431",
+      "name": "pdf",
+      "font_class": "pdf",
+      "unicode": "e740",
+      "unicode_decimal": 59200
+    },
+    {
       "icon_id": "663541",
       "name": "shoping car",
       "font_class": "i-shoping-car",
@@ -25,6 +32,13 @@
       "font_class": "routes",
       "unicode": "ea59",
       "unicode_decimal": 59993
+    },
+    {
+      "icon_id": "1013751",
+      "name": "Excel文件",
+      "font_class": "excelwenjian",
+      "unicode": "e745",
+      "unicode_decimal": 59205
     },
     {
       "icon_id": "1389514",
@@ -41,6 +55,13 @@
       "unicode_decimal": 59025
     },
     {
+      "icon_id": "4608986",
+      "name": "主题",
+      "font_class": "jingzi",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
       "icon_id": "5317063",
       "name": "users",
       "font_class": "users",
@@ -53,6 +74,20 @@
       "font_class": "github1",
       "unicode": "e6b7",
       "unicode_decimal": 59063
+    },
+    {
+      "icon_id": "18171232",
+      "name": "剪切板,剪切",
+      "font_class": "copy",
+      "unicode": "ea32",
+      "unicode_decimal": 59954
+    },
+    {
+      "icon_id": "29351405",
+      "name": "link",
+      "font_class": "link",
+      "unicode": "e6de",
+      "unicode_decimal": 59102
     },
     {
       "icon_id": "34453289",

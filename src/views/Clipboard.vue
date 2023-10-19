@@ -1,11 +1,9 @@
 <template>
-  <div>
-    documentation ddd
-  </div>
+  <div>Clipboard</div>
 </template>
 <script>
 export default {
-  name: 'myDocumentation'
+  name: 'Clipboard'
 }
 </script>
 

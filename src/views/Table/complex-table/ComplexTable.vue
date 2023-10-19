@@ -6,7 +6,7 @@
       >
       <el-input
         v-model="search"
-        type="password"
+        type="text"
         placeholder="Type to search"
         class="condition-btn"
         style="width: 300px"
@@ -35,7 +35,7 @@
           <div @click="editRow(scope.$index, scope.row)" class="table-titleItem">
             {{ scope.row.title }}
           </div>
-          <el-tag>{{ scope.row.type }}</el-tag>
+          <el-tag>{{ scope.row.nationality }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column
@@ -100,8 +100,8 @@
     </el-table>
     <el-dialog v-model="dialogFormVisible" :title="popTitle">
       <el-form :model="form">
-        <el-form-item label="type: " :label-width="formLabelWidth">
-          <el-select v-model="form.type" placeholder="Please select type">
+        <el-form-item label="nationality: " :label-width="formLabelWidth">
+          <el-select v-model="form.nationality" placeholder="Please select nationality">
             <el-option v-for="item in filterType" :key="item" :value="item" />
           </el-select>
         </el-form-item>
@@ -133,12 +133,21 @@
         </span>
       </template>
     </el-dialog>
+    <my-pagination
+      :total="total"
+      :page-size="pageSize"
+      :current-page="currentPage"
+      @size-change="sizeChangeHandler"
+      @current-change="pageChangeHandler"
+    />
   </div>
 </template>
 
 <script setup>
-import { ref, computed, reactive } from 'vue'
+import MyPagination from '../../../components/MyPagination.vue'
+import { ref, computed, reactive, onMounted } from 'vue'
 import _ from 'lodash'
+import axios from 'axios'
 
 const search = ref('')
 const filterTableData = computed(() =>
@@ -156,6 +165,8 @@ const colors = ref(['#99A9BF', '#F7BA2A', '#FF9900'])
 const popup = ref('')
 const popTitle = ref('')
 const formData = ['title', 'name', 'imp', 'reviewer', 'remark']
+const pageSize = ref(20)
+const currentPage = ref(1)
 const form = reactive({
   title: '',
   name: '',
@@ -166,6 +177,27 @@ const form = reactive({
   status: ''
 })
 
+const total = computed(() => {
+  return allTableData.value.length
+})
+
+const tableData = computed(() => {
+  const startIndex = pageSize.value * (currentPage.value - 1)
+  return allTableData.value.slice(startIndex, pageSize.value + startIndex)
+})
+const pageCount = computed(() => {
+  return Math.ceil(total.value / pageSize.value)
+})
+const sizeChangeHandler = (e) => {
+  currentPage.value = 1
+  pageSize.value = Number(e)
+}
+const pageChangeHandler = (page) => {
+  if (page < 1 || page > pageCount.value) {
+    return
+  }
+  currentPage.value = page
+}
 // TODO: improvement typing when refactor table
 const clearFilter = () => {
   tableRef.value.clearFilter()
@@ -189,7 +221,7 @@ const editRow = (index, row) => {
   }
   form.date = row.date
   form.imp = row.imp
-  form.type = row.type
+  form.nationality = row.nationality
   form.title = row.title
   form.name = row.name
   form.remark = row.remark
@@ -215,7 +247,7 @@ const saveEditedContent = () => {
   tableData.value[editIndex.value].title = form.title
   tableData.value[editIndex.value].name = form.name
   tableData.value[editIndex.value].date = form.date
-  tableData.value[editIndex.value].type = form.type
+  tableData.value[editIndex.value].nationality = form.nationality
   tableData.value[editIndex.value].imp = form.imp
   tableData.value[editIndex.value].remark = form.remark
   tableData.value[editIndex.value].status = form.status
@@ -231,49 +263,13 @@ const publishEdit = () => {
 const deleteRow = (index) => {
   tableData.value.splice(index, 1)
 }
+const allTableData = ref([])
 
-const tableData = ref([
-  {
-    date: '2023/09/15 06:07',
-    name: 'Joe',
-    title: 'No. 189, Los Angeles',
-    type: 'China',
-    status: 'draft',
-    imp: '3',
-    remark: '',
-    reviewer: 'Jack'
-  },
-  {
-    date: '2023-09-08 05:08',
-    name: 'Tom',
-    title: 'No. 189, Grove, Los Angeles',
-    type: 'USA',
-    status: 'published',
-    imp: '4',
-    remark: '',
-    reviewer: 'Larry'
-  },
-  {
-    date: '2023-09-28 07:27',
-    name: 'marry',
-    title: 'No. 189, Grove St, ',
-    type: 'EuroZone',
-    status: 'draft',
-    imp: '1',
-    remark: '',
-    reviewer: 'Mary'
-  },
-  {
-    date: '2023-09-08 06:21',
-    name: 'Tom',
-    title: 'No. 189, Grove St,Angeles',
-    type: 'Japan',
-    status: 'published',
-    imp: '2',
-    remark: '',
-    reviewer: 'Frank'
-  }
-])
+onMounted(() => {
+  axios.get('https://mock.apifox.cn/m1/3403635-0-default/table').then((res) => {
+    allTableData.value = [...res.data]
+  })
+})
 
 const filterName = computed(() => {
   return filterArray(
@@ -291,7 +287,7 @@ const filterImp = computed(() =>
   _.uniqBy(tableData.value, 'imp').map((item) => ({ text: item.imp, value: item.imp }))
 )
 
-const filterType = _.uniqBy(tableData.value, 'type').map((item) => item.type)
+const filterType = _.uniqBy(tableData.value, 'nationality').map((item) => item.nationality)
 const filterStatus = computed(() => {
   return filterArray(
     tableData.value.map((obj) => {

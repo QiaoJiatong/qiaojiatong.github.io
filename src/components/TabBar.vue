@@ -1,12 +1,14 @@
 <template>
-  <div class="tab-bar">
-    <router-link v-for="tab in tabData" :key="tab.path" class="tab-bar__item" :to="tab.path">
-      {{ tab.name }}
-      <el-icon v-if="tab.path !== routes[0].path" @click.prevent.stop="closeView(tab)"
-        ><Close
-      /></el-icon>
-    </router-link>
-  </div>
+  <el-scrollbar>
+    <div class="tab-bar">
+      <router-link v-for="tab in tabData" :key="tab.path" class="tab-bar__item" :to="tab.path">
+        {{ tab.name }}
+        <el-icon v-if="tab.path !== routes[0].path" @click.prevent.stop="closeView(tab)"
+          ><Close
+        /></el-icon>
+      </router-link>
+    </div>
+  </el-scrollbar>
 </template>
 <script setup>
 import { ref, watch, onMounted } from 'vue'
@@ -51,7 +53,6 @@ const closeView = (view) => {
   display: flex;
 }
 .tab-bar__item {
-  display: inline-block;
   position: relative;
   cursor: pointer;
   height: 26px;
@@ -61,9 +62,13 @@ const closeView = (view) => {
   background: #fff;
   padding: 0 8px;
   font-size: 12px;
-  margin-left: 5px;
   margin-top: 4px;
   text-decoration: none;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
 }
 
 .router-link-active {

@@ -8,7 +8,7 @@
         :@open="handleOpen($route.name)"
       >
         <template v-for="route in routes" :key="route.name">
-          <el-sub-menu v-if="route.children" :index="route.name">
+          <el-sub-menu v-if="route.children " :index="route.name">
             <template #title>
               <icon-font v-if="route.meta && route.meta.icon" :icon-name="route.meta.icon" />
               <span>{{ route.name }}</span>

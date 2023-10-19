@@ -18,7 +18,7 @@ export default {
 }
 </script>
 <style scoped>
-.el-breadcrumb{
+.el-breadcrumb {
   height: 30px;
   display: flex;
   align-items: center;

@@ -44,10 +44,6 @@ import { ref, computed, onMounted } from 'vue'
 import axios from 'axios'
 
 const allItems = ref([])
-// const allItems = ref([{
-//   id:
-// }, '分叉这个储存库', '关注作者', 'vue-元素-管理'])
-
 onMounted(() => {
   axios.get('https://6504881cc8869921ae252701.mockapi.io/todoList').then((res) => {
     allItems.value = res.data.map((d) => d.text)

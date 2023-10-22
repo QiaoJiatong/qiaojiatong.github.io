@@ -11,21 +11,15 @@
         class="condition-btn"
         style="width: 300px"
       />
-      <el-button type="primary" class="condition-btn" @click="editRow(null, form)"> Add </el-button>
+      <el-button type="primary" class="condition-btn" @click="addCOntent(0, row)"> Add </el-button>
       <el-checkbox v-model="showReviewer" class="condition-btn"> reviewer </el-checkbox>
     </div>
-    <el-table
-      ref="tableRef"
-      row-key="date"
-      :data="filterTableData"
-      style="width: 100%"
-      :border="true"
-    >
+    <el-table ref="tableRef" row-key="date" :data="tableData" style="width: 100%" :border="true">
       <el-table-column type="index" label="ID" width="60" sortable align="center" />
       <el-table-column
         prop="date"
         label="Date"
-        width="160"
+        width="100"
         :filters="filterDate"
         :filter-method="filterHandler"
         align="center"
@@ -34,8 +28,8 @@
         <template #default="scope">
           <div @click="editRow(scope.$index, scope.row)" class="table-titleItem">
             {{ scope.row.title }}
+            <el-tag>{{ scope.row.nationality }}</el-tag>
           </div>
-          <el-tag>{{ scope.row.nationality }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column
@@ -62,7 +56,7 @@
         align="center"
       >
         <template #default="scope">
-          <el-rate v-model="scope.row.imp" :colors="colors" style="pointer-events: none" />
+          <el-rate v-model="scope.row.imp" :max="3" :colors="colors" style="pointer-events: none" />
         </template>
       </el-table-column>
       <el-table-column
@@ -72,7 +66,8 @@
         column-key="status"
         :filters="filterStatus"
         :filter-method="filterHandler"
-        filter-placement="bottom-end"
+        filter-placement="bottom"
+        :filter-multiple="false"
         align="center"
       >
         <template #default="scope">
@@ -102,17 +97,17 @@
       <el-form :model="form">
         <el-form-item label="nationality: " :label-width="formLabelWidth">
           <el-select v-model="form.nationality" placeholder="Please select nationality">
-            <el-option v-for="item in filterType" :key="item" :value="item" />
+            <el-option v-for="item in filterNationality" :key="item" :value="item" />
           </el-select>
         </el-form-item>
         <el-form-item label="Date:" :label-width="formLabelWidth">
           <el-date-picker
             v-model="form.date"
             type="datetime"
-            placeholder="Select date and time"
+            placeholder="Select date"
             :shortcuts="shortcuts"
-            format="YYYY/MM/DD HH:mm"
-            value-format="YYYY-MM-DD HH:mm"
+            format="YYYY/MM/DD"
+            value-format="YYYY-MM-DD"
           />
         </el-form-item>
         <el-form-item
@@ -144,46 +139,47 @@
 </template>
 
 <script setup>
-import MyPagination from '../../../components/MyPagination.vue'
+import MyPagination from '@/components/MyPagination.vue'
 import { ref, computed, reactive, onMounted } from 'vue'
 import _ from 'lodash'
 import axios from 'axios'
+import { useCounterStore } from '@/stores/counter'
 
+const store = useCounterStore()
 const search = ref('')
 const filterTableData = computed(() =>
-  tableData.value.filter(
+  allTableData.value.filter(
     (data) => !search.value || data.title.toLowerCase().includes(search.value.toLowerCase())
   )
 )
-
 const tableRef = ref()
 const showReviewer = ref(false)
 const dialogFormVisible = ref(false)
 const formLabelWidth = '140px'
 const editIndex = ref(0)
 const colors = ref(['#99A9BF', '#F7BA2A', '#FF9900'])
-const popup = ref('')
-const popTitle = ref('')
+const popTitle = ref('edit')
 const formData = ['title', 'name', 'imp', 'reviewer', 'remark']
-const pageSize = ref(20)
+const pageSize = ref(30)
 const currentPage = ref(1)
 const form = reactive({
-  title: '',
-  name: '',
   date: '',
-  imp: null,
+  imp: 1,
+  name: store.userName,
+  nationality: 'China',
   remark: '',
   reviewer: '',
-  status: ''
+  status: 'draft',
+  title: ''
 })
 
 const total = computed(() => {
-  return allTableData.value.length
+  return filterTableData.value.length
 })
 
 const tableData = computed(() => {
   const startIndex = pageSize.value * (currentPage.value - 1)
-  return allTableData.value.slice(startIndex, pageSize.value + startIndex)
+  return filterTableData.value.slice(startIndex, pageSize.value + startIndex)
 })
 const pageCount = computed(() => {
   return Math.ceil(total.value / pageSize.value)
@@ -207,18 +203,11 @@ const formatter = (row) => {
 }
 
 const filterHandler = (value, row, column) => {
+  console.log(column)
   const property = column['property']
   return row[property] === value
 }
 const editRow = (index, row) => {
-  if (index === null) {
-    popup.value = 'addPop'
-    popTitle.value = 'Add'
-    index = tableData.value.length
-  } else {
-    popup.value = 'editPop'
-    popTitle.value = 'edit'
-  }
   form.date = row.date
   form.imp = row.imp
   form.nationality = row.nationality
@@ -230,30 +219,39 @@ const editRow = (index, row) => {
   editIndex.value = index
   dialogFormVisible.value = true
 }
-const saveEditedContent = () => {
-  if (popup.value === 'addPop') {
-    const newItem = {
-      title: '',
-      name: '',
-      date: '',
-      imp: null,
-      remark: '',
-      reviewer: '',
-      status: ''
-    }
-    tableData.value.push(newItem)
+const addCOntent = (index, row) => {
+  const newItem = {
+    date: getCurrentDate(),
+    imp: 1,
+    name: store.userName,
+    nationality: 'China',
+    remark: '',
+    reviewer: '',
+    status: 'draft',
+    title: ''
   }
-  // todo: 直接 = {...form}
+  popTitle.value = 'add'
+  row = { ...newItem }
+  editRow(index, row)
+}
+const saveEditedContent = () => {
+  if (popTitle.value === 'add') {
+    const newItem = { ...form }
+    allTableData.value.unshift(newItem)
+    popTitle.value = 'edit'
+    dialogFormVisible.value = false
+    return
+  }
   tableData.value[editIndex.value].title = form.title
   tableData.value[editIndex.value].name = form.name
   tableData.value[editIndex.value].date = form.date
   tableData.value[editIndex.value].nationality = form.nationality
   tableData.value[editIndex.value].imp = form.imp
   tableData.value[editIndex.value].remark = form.remark
-  tableData.value[editIndex.value].status = form.status
   tableData.value[editIndex.value].reviewer = form.reviewer
   tableData.value[editIndex.value].status = 'draft'
   dialogFormVisible.value = false
+  popTitle.value = 'edit'
 }
 const publishEdit = () => {
   saveEditedContent()
@@ -273,21 +271,37 @@ onMounted(() => {
 
 const filterName = computed(() => {
   return filterArray(
-    tableData.value.map((obj) => {
+    filterTableData.value.map((obj) => {
       return { text: obj.name, value: obj.name }
     }),
     (item) => item.text
   )
 })
+const getCurrentDate = () => {
+  const currentDate = new Date()
+  const year = currentDate.getFullYear()
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0')
+  const day = String(currentDate.getDate()).padStart(2, '0')
+  const formattedDate = `${year}-${month}-${day}`
+  return formattedDate
+}
 
 const filterDate = computed(() =>
   _.uniqBy(tableData.value, 'date').map((item) => ({ text: item.date, value: item.date }))
 )
-const filterImp = computed(() =>
-  _.uniqBy(tableData.value, 'imp').map((item) => ({ text: item.imp, value: item.imp }))
-)
+// const filterImp = computed(() =>
+//   _.uniqBy(filterTableData.value, 'imp').map((item) => ({ text: item.imp, value: item.imp }))
+// )
 
-const filterType = _.uniqBy(tableData.value, 'nationality').map((item) => item.nationality)
+const filterImp = [
+  { text: 1, value: 1 },
+  { text: 2, value: 2 },
+  { text: 3, value: 3 }
+]
+
+const filterNationality = computed(() =>
+  _.uniqBy(allTableData.value, 'nationality').map((item) => item.nationality)
+)
 const filterStatus = computed(() => {
   return filterArray(
     tableData.value.map((obj) => {

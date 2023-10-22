@@ -14,8 +14,8 @@
 </template>
 <script>
 import SideBar from '@/components/SideBar.vue'
-import BreadcrumbBar from './components/BreadcrumbBar.vue'
-import TabBar from './components/TabBar.vue'
+import BreadcrumbBar from '@/components/BreadcrumbBar.vue'
+import TabBar from '@/components/TabBar.vue'
 import Login from './views/loginPage/Login.vue'
 export default {
   name: 'App',

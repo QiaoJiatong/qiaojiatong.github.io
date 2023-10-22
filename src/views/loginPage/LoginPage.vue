@@ -3,7 +3,7 @@
     <h1>Login Form</h1>
     <el-form>
       <el-form-item label="用户：">
-        <el-input v-model="nameInput" placeholder="name" />
+        <el-input v-model="store.userName" placeholder="name" />
       </el-form-item>
       <el-form-item label="密码：">
         <el-input v-model="passwordInput" type="password" placeholder="password" show-password />
@@ -19,8 +19,9 @@ import axios from 'axios'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import Cookie from 'js-cookie'
+import { useCounterStore } from '@/stores/counter'
+const store = useCounterStore()
 
-const nameInput = ref('')
 const passwordInput = ref('')
 
 const router = useRouter()
@@ -28,7 +29,7 @@ const router = useRouter()
 const toLogin = () => {
   axios
     .post('https://mock.apifox.cn/m1/3403635-0-default/login', {
-      userName: nameInput.value,
+      userName: store.userName,
       password: passwordInput.value
     })
     .then((res) => {

@@ -14,7 +14,7 @@
 import { ref, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import routes from '../router/route'
-import _ from 'lodash'
+// import _ from 'lodash'
 
 const tabData = ref([])
 const route = useRoute()
@@ -29,16 +29,24 @@ watch(route, (newRoute) => {
     return
   }
   //  自己写一个cloneDeep方法
-  tabData.value.push(_.cloneDeep(newRoute))
+  tabData.value.push(cloneDeep(newRoute))
 })
 
-// const cloneDeep = (item) => {
-//     if(item === null){
-//         return
-//     }else{
-
-//     }
+const cloneDeep = (item) => {
+  if (item === null) {
+    return
+  } else {
+    const newItem = { ...item }
+    return newItem
+  }
+}
+// const obj = {
+//   text: '1'
 // }
+// console.log(obj === cloneDeep(obj)) 
+// const fxArr = ['One', 'Two', 'Three']
+// const fxArrs = fxArr
+// console.log(fxArr === fxArrs)
 const closeView = (view) => {
   console.log(view)
   tabData.value = tabData.value.filter((tab) => tab !== view)

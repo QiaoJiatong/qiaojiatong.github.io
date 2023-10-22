@@ -1,12 +1,13 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <el-popover :visible="visible" placement="top" :width="100">
+  <el-popover :visible="visible" placement="bottom" :width="100" trigger="focus">
     <div style="text-align: center">
-      <el-button text @click="$router.push('/dashboard')"> 首页 </el-button>
+      <el-button text @click="toDashboard">首页</el-button>
       <el-button text @click="loginOut">退出登录</el-button>
     </div>
     <template #reference>
       <span class="login-link">
-        <div @click="visible = true" class="login-page-gif"></div>
+        <div @click="visible = !visible" class="login-page-gif"></div>
       </span>
     </template>
   </el-popover>
@@ -14,6 +15,7 @@
 <script>
 import Cookie from 'js-cookie'
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Login',
   data() {
     return {
@@ -24,6 +26,10 @@ export default {
     loginOut() {
       Cookie.remove('token')
       this.$router.push('/login')
+    },
+    toDashboard(){
+      this.$router.push('/')
+      this.visible = false;
     }
   }
 }
@@ -31,10 +37,10 @@ export default {
 <style scoped>
 .login-link {
   display: flex;
-  right: 20px;
+  right: 25px;
   position: absolute;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   flex-wrap: wrap;
   flex-direction: column-reverse;
   align-content: flex-end;
@@ -45,8 +51,9 @@ export default {
 .login-page-gif {
   background-image: url('/dashboardCard.gif');
   background-size: 100% 100%;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
 }
 .el-button.is-text {
   margin-left: 10px;

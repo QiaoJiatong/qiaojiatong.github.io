@@ -1,5 +1,5 @@
 <template>
-  <div>Guide</div>
+  <div v-permission="'admin'">Guide</div>
   <RouterView />
 </template>
 <script>

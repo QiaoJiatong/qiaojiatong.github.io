@@ -1,10 +1,9 @@
-import { useCounterStore } from '@/stores/counter'
-const store = useCounterStore()
+import Cookie from 'js-Cookie'
 
 function checkPermission(el, binding) {
  
   const hasPermission = () =>{
-   return binding.value === store.userName
+   return binding.value === Cookie.get('userName')
   } 
   if (!hasPermission) {
     el.parentNode && el.parentNode.removeChild(el)

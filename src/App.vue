@@ -4,8 +4,8 @@
     <el-main class="router-view">
       <el-header>
         <BreadcrumbBar />
-        <Login />
-        <tab-bar />
+        <AvatarMenu />
+        <TabBar />
       </el-header>
       <router-view />
     </el-main>
@@ -16,10 +16,10 @@
 import SideBar from '@/components/SideBar.vue'
 import BreadcrumbBar from '@/components/BreadcrumbBar.vue'
 import TabBar from '@/components/TabBar.vue'
-import Login from './views/loginPage/Login.vue'
+import AvatarMenu from './views/loginPage/AvatarMenu.vue'
 export default {
   name: 'App',
-  components: { SideBar, BreadcrumbBar, TabBar, Login },
+  components: { SideBar, BreadcrumbBar, TabBar, AvatarMenu },
   computed: {
     needSideBar() {
       return this.$route.path !== '/login'

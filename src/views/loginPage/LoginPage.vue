@@ -1,15 +1,14 @@
 <template>
   <div class="login-page">
-    <h1>Login Form</h1>
+    <h1>欢迎登录</h1>
     <el-form>
       <el-form-item label="用户：">
-        <el-input v-model="store.userName" placeholder="name" />
+        <el-input v-model="userNameInput" placeholder="name" />
       </el-form-item>
       <el-form-item label="密码：">
         <el-input v-model="passwordInput" type="password" placeholder="password" show-password />
       </el-form-item>
     </el-form>
-    <!-- <p>{{ $counter.useCounterStore.routerTokens }}</p> -->
     <el-button type="primary" @click="toLogin">Login</el-button>
   </div>
 </template>
@@ -18,10 +17,10 @@ import { ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import Cookie from 'js-cookie'
-import { useCounterStore } from '@/stores/counter'
-const store = useCounterStore()
+import Cookie from 'js-Cookie'
 
+
+const userNameInput = ref('')
 const passwordInput = ref('')
 
 const router = useRouter()
@@ -29,16 +28,19 @@ const router = useRouter()
 const toLogin = () => {
   axios
     .post('https://mock.apifox.cn/m1/3403635-0-default/login', {
-      userName: store.userName,
+      userName: userNameInput.value,
       password: passwordInput.value
     })
     .then((res) => {
+      const { data } = res
       if (res.data.success) {
-        Cookie.set('token', res.data.token)
+        console.log(data)
+        Cookie.set('token', data.token)
+        Cookie.set('userName', userNameInput.value)
         router.push('/dashboard')
       } else {
         ElMessage({
-          message: res.data.errorMessage,
+          message: data.errorMessage,
           type: 'warning'
         })
       }

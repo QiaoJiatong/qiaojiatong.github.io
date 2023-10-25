@@ -1,35 +1,35 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <el-popover :visible="visible" placement="bottom" :width="100" trigger="focus">
+  <el-popover placement="bottom" :width="100" trigger="click" popper-class="avatar-menu_popover">
     <div style="text-align: center">
       <el-button text @click="toDashboard">首页</el-button>
-      <el-button text @click="loginOut">退出登录</el-button>
+      <el-button text @click="logout">退出登录</el-button>
     </div>
     <template #reference>
       <span class="login-link">
-        <div @click="visible = !visible" class="login-page-gif"></div>
+        <div class="login-page-gif"></div>
       </span>
     </template>
   </el-popover>
 </template>
 <script>
-import Cookie from 'js-cookie'
+import Cookie from 'js-Cookie'
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: 'Login',
+  name: 'AvatarMenu',
   data() {
     return {
-      visible: false
+      // visible: false
     }
   },
   methods: {
-    loginOut() {
+    logout() {
       Cookie.remove('token')
       this.$router.push('/login')
     },
-    toDashboard(){
+    toDashboard() {
       this.$router.push('/')
-      this.visible = false;
+      this.visible = false
     }
   }
 }
@@ -58,5 +58,11 @@ export default {
 .el-button.is-text {
   margin-left: 10px;
   margin-right: 10px;
+}
+</style>
+
+<style>
+.el-popover.el-popper.avatar-menu_popover {
+  min-width: 100px;
 }
 </style>

@@ -143,9 +143,11 @@ import MyPagination from '@/components/MyPagination.vue'
 import { ref, computed, reactive, onMounted } from 'vue'
 import _ from 'lodash'
 import axios from 'axios'
-import { useCounterStore } from '@/stores/counter'
+import Cookies from 'js-Cookie'
+// import { useUserInfo } from '../../../stores/userInfo'
 
-const store = useCounterStore()
+// const { user } = useUserInfo()
+// console.log(user);
 const search = ref('')
 const filterTableData = computed(() =>
   allTableData.value.filter(
@@ -165,7 +167,7 @@ const currentPage = ref(1)
 const form = reactive({
   date: '',
   imp: 1,
-  name: store.userName,
+  name: '',
   nationality: 'China',
   remark: '',
   reviewer: '',
@@ -223,7 +225,7 @@ const addCOntent = (index, row) => {
   const newItem = {
     date: getCurrentDate(),
     imp: 1,
-    name: store.userName,
+    name: Cookies.get('userName'),
     nationality: 'China',
     remark: '',
     reviewer: '',

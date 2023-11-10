@@ -13,7 +13,7 @@
   </el-popover>
 </template>
 <script>
-import Cookie from 'js-Cookie'
+import Cookie from 'js-cookie'
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'AvatarMenu',
@@ -49,20 +49,25 @@ export default {
   cursor: pointer;
 }
 .login-page-gif {
-  background-image: url('/dashboardCard.gif');
+  background-image: url('/avatar.webp');
   background-size: 100% 100%;
   width: 40px;
   height: 40px;
   border-radius: 10px;
 }
-.el-button.is-text {
-  margin-left: 10px;
-  margin-right: 10px;
+
+.el-button.is-text{
+  margin-left: 0px;
 }
+
 </style>
+
 
 <style>
 .el-popover.el-popper.avatar-menu_popover {
   min-width: 100px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 </style>

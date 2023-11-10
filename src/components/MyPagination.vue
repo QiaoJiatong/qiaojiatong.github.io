@@ -25,7 +25,7 @@ export default {
   emits: ['size-change', 'current-change', 'click-previous', 'click-next'],
   props: {
     total: {
-      type: Number,
+      type: Number,   
       default: 0
     },
     pageSize: {

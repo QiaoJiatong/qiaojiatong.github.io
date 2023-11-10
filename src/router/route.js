@@ -188,13 +188,13 @@ const routes = [
     },
     children: [
       {
-        path: '401',
+        path: '/401',
         component: Page401,
         name: 'Page401',
         meta: { title: '401', noCache: true }
       },
       {
-        path: '404',
+        path: '/404',
         component: Page404,
         name: 'Page404',
         meta: { title: '404', noCache: true }

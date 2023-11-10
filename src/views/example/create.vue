@@ -1,5 +1,5 @@
 <template>
-    <div>create</div>
+    <div>{{ $t('message.hello') }}</div>
   </template>
   <script>
   export default {

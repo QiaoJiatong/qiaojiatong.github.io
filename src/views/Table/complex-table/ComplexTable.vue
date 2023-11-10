@@ -11,9 +11,10 @@
         class="condition-btn"
         style="width: 300px"
       />
-      <el-button type="primary" class="condition-btn" @click="addCOntent(0, row)"> Add </el-button>
+      <el-button type="primary" class="condition-btn" @click="add"> Add </el-button>
       <el-checkbox v-model="showReviewer" class="condition-btn"> reviewer </el-checkbox>
     </div>
+
     <el-table ref="tableRef" row-key="date" :data="tableData" style="width: 100%" :border="true">
       <el-table-column type="index" label="ID" width="60" sortable align="center" />
       <el-table-column
@@ -26,7 +27,7 @@
       />
       <el-table-column prop="title" label="Title" :formatter="formatter">
         <template #default="scope">
-          <div @click="editRow(scope.$index, scope.row)" class="table-titleItem">
+          <div @click="editRow(scope.$index, scope.row)" class="table-title-item">
             {{ scope.row.title }}
             <el-tag>{{ scope.row.nationality }}</el-tag>
           </div>
@@ -71,63 +72,37 @@
         align="center"
       >
         <template #default="scope">
-          <el-button
-            :type="scope.row.status === 'published' ? 'primary' : ''"
-            disable-transitions
+          <el-tag
+            :type="scope.row.status === PUBLISH_STATUS.published ? 'success' : ''"
+            disabled
             style="width: 70px"
-            >{{ scope.row.status }}</el-button
+            >{{ scope.row.status }}</el-tag
           >
         </template>
       </el-table-column>
       <el-table-column label="Operations" align="center" width="260">
         <template #default="scope">
-          <el-button type="primary" @click="editRow(scope.$index, scope.row)"> Edit </el-button>
-          <el-button
-            :type="scope.row.status === 'draft' ? 'primary' : ''"
+          <el-button type="primary" @click="editRow(scope.row)"> 编辑 </el-button>
+          <el-tag
+            :type="scope.row.status === PUBLISH_STATUS.draft ? 'success' : ''"
             @click="changeStatus(scope.row)"
             style="width: 70px"
           >
-            {{ scope.row.status === 'draft' ? 'published' : 'draft' }}
-          </el-button>
-          <el-button type="danger" @click.prevent="deleteRow(scope.$index)">Delete</el-button>
+            {{ scope.row.status === PUBLISH_STATUS.draft ? '发布' : '草稿' }}
+          </el-tag>
+          <el-button type="danger" @click="deleteRow(scope.row)"> 删除 </el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog v-model="dialogFormVisible" :title="popTitle">
-      <el-form :model="form">
-        <el-form-item label="nationality: " :label-width="formLabelWidth">
-          <el-select v-model="form.nationality" placeholder="Please select nationality">
-            <el-option v-for="item in filterNationality" :key="item" :value="item" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="Date:" :label-width="formLabelWidth">
-          <el-date-picker
-            v-model="form.date"
-            type="datetime"
-            placeholder="Select date"
-            :shortcuts="shortcuts"
-            format="YYYY/MM/DD"
-            value-format="YYYY-MM-DD"
-          />
-        </el-form-item>
-        <el-form-item
-          v-for="item in formData"
-          :key="item"
-          :label="item + ': '"
-          :label-width="formLabelWidth"
-        >
-          <el-rate v-if="item === 'imp'" v-model="form[`${item}`]" :colors="colors" />
-          <el-input v-else v-model="form[`${item}`]" autocomplete="off" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="saveEditedContent"> ConfirmDraft </el-button>
-          <el-button type="primary" @click="publishEdit"> Publish </el-button>
-        </span>
-      </template>
-    </el-dialog>
+
+    <DialogForm
+      :visible="dialogFormVisible"
+      :initForm="initForm"
+      :popTitle="popTitle"
+      :filterNationality="filterNationality"
+      @save="saveEditedContent"
+      @cancel="dialogFormVisible = false"
+    />
     <my-pagination
       :total="total"
       :page-size="pageSize"
@@ -143,60 +118,78 @@ import MyPagination from '@/components/MyPagination.vue'
 import { ref, computed, reactive, onMounted } from 'vue'
 import _ from 'lodash'
 import axios from 'axios'
-import Cookies from 'js-Cookie'
-// import { useUserInfo } from '../../../stores/userInfo'
+import Cookies from 'js-cookie'
+import usePagination from './usePagination'
+import DialogForm from './DialogForm.vue'
+import { PUBLISH_STATUS } from './constants'
 
-// const { user } = useUserInfo()
-// console.log(user);
+const colors = ['#99A9BF', '#F7BA2A', '#FF9900']
+
+const tableRef = ref()
+const allTableData= ref([])
 const search = ref('')
 const filterTableData = computed(() =>
   allTableData.value.filter(
     (data) => !search.value || data.title.toLowerCase().includes(search.value.toLowerCase())
   )
 )
-const tableRef = ref()
 const showReviewer = ref(false)
+
+const { pageSize, currentPage, total, sizeChangeHandler, pageChangeHandler } =
+  usePagination(filterTableData)
+
+//编辑窗口
 const dialogFormVisible = ref(false)
-const formLabelWidth = '140px'
-const editIndex = ref(0)
-const colors = ref(['#99A9BF', '#F7BA2A', '#FF9900'])
-const popTitle = ref('edit')
-const formData = ['title', 'name', 'imp', 'reviewer', 'remark']
-const pageSize = ref(30)
-const currentPage = ref(1)
-const form = reactive({
-  date: '',
-  imp: 1,
-  name: '',
-  nationality: 'China',
-  remark: '',
-  reviewer: '',
-  status: 'draft',
-  title: ''
-})
+const editingRow = ref(null)
+const isAdd = ref(true)
+const initForm = reactive({})
 
-const total = computed(() => {
-  return filterTableData.value.length
-})
+const popTitle = computed(() => (isAdd.value ? '新增' : '编辑'))
 
+const edit = (row) => {
+  Object.keys(row).forEach((key) => {
+    initForm[key] = row[key]
+  })
+  dialogFormVisible.value = true
+}
+
+const editRow = (row) => {
+  edit(row)
+  editingRow.value = row
+  isAdd.value = false
+}
+
+const add = () => {
+  const newRow = {
+    date: getCurrentDate(),
+    imp: 1,
+    name: Cookies.get('userName'),
+    nationality: 'China',
+    remark: '',
+    reviewer: '',
+    status: PUBLISH_STATUS.draft,
+    title: ''
+  }
+  edit(newRow)
+  isAdd.value = true
+}
+const saveEditedContent = (form, status = PUBLISH_STATUS.draft) => {
+  dialogFormVisible.value = false
+  const newRow = { ...form, status }
+  if (isAdd.value) {
+    allTableData.value.unshift(newRow)
+    return
+  }
+  const editingIndex = allTableData.value.findIndex((row) => row === editingRow.value)
+  allTableData.value[editingIndex] = newRow
+}
+
+//分页
 const tableData = computed(() => {
   const startIndex = pageSize.value * (currentPage.value - 1)
   return filterTableData.value.slice(startIndex, pageSize.value + startIndex)
 })
-const pageCount = computed(() => {
-  return Math.ceil(total.value / pageSize.value)
-})
-const sizeChangeHandler = (e) => {
-  currentPage.value = 1
-  pageSize.value = Number(e)
-}
-const pageChangeHandler = (page) => {
-  if (page < 1 || page > pageCount.value) {
-    return
-  }
-  currentPage.value = page
-}
-// TODO: improvement typing when refactor table
+
 const clearFilter = () => {
   tableRef.value.clearFilter()
 }
@@ -209,61 +202,11 @@ const filterHandler = (value, row, column) => {
   const property = column['property']
   return row[property] === value
 }
-const editRow = (index, row) => {
-  form.date = row.date
-  form.imp = row.imp
-  form.nationality = row.nationality
-  form.title = row.title
-  form.name = row.name
-  form.remark = row.remark
-  form.status = row.status
-  form.reviewer = row.reviewer
-  editIndex.value = index
-  dialogFormVisible.value = true
-}
-const addCOntent = (index, row) => {
-  const newItem = {
-    date: getCurrentDate(),
-    imp: 1,
-    name: Cookies.get('userName'),
-    nationality: 'China',
-    remark: '',
-    reviewer: '',
-    status: 'draft',
-    title: ''
-  }
-  popTitle.value = 'add'
-  row = { ...newItem }
-  editRow(index, row)
-}
-const saveEditedContent = () => {
-  if (popTitle.value === 'add') {
-    const newItem = { ...form }
-    allTableData.value.unshift(newItem)
-    popTitle.value = 'edit'
-    dialogFormVisible.value = false
-    return
-  }
-  tableData.value[editIndex.value].title = form.title
-  tableData.value[editIndex.value].name = form.name
-  tableData.value[editIndex.value].date = form.date
-  tableData.value[editIndex.value].nationality = form.nationality
-  tableData.value[editIndex.value].imp = form.imp
-  tableData.value[editIndex.value].remark = form.remark
-  tableData.value[editIndex.value].reviewer = form.reviewer
-  tableData.value[editIndex.value].status = 'draft'
-  dialogFormVisible.value = false
-  popTitle.value = 'edit'
-}
-const publishEdit = () => {
-  saveEditedContent()
-  tableData.value[editIndex.value].status = 'published'
-}
 
-const deleteRow = (index) => {
-  tableData.value.splice(index, 1)
+const deleteRow = (row) => {
+  const index = allTableData.value.findIndex((item) => item === row)
+  allTableData.value.splice(index, 1)
 }
-const allTableData = ref([])
 
 onMounted(() => {
   axios.get('https://mock.apifox.cn/m1/3403635-0-default/table').then((res) => {
@@ -291,9 +234,6 @@ const getCurrentDate = () => {
 const filterDate = computed(() =>
   _.uniqBy(tableData.value, 'date').map((item) => ({ text: item.date, value: item.date }))
 )
-// const filterImp = computed(() =>
-//   _.uniqBy(filterTableData.value, 'imp').map((item) => ({ text: item.imp, value: item.imp }))
-// )
 
 const filterImp = [
   { text: 1, value: 1 },
@@ -313,10 +253,10 @@ const filterStatus = computed(() => {
   )
 })
 const changeStatus = (row) => {
-  if (row.status === 'published') {
-    row.status = 'draft'
+  if (row.status === PUBLISH_STATUS.published) {
+    row.status = PUBLISH_STATUS.draft
   } else {
-    row.status = 'published'
+    row.status = PUBLISH_STATUS.published
   }
 }
 
@@ -348,15 +288,18 @@ const filterArray = (arr, param) => {
   height: 100%;
   margin: 5px;
 }
-.table-titleItem:hover {
+.table-title-item:hover {
   cursor: pointer;
   color: rgb(234, 44, 44);
   font-style: normal;
   font-family: 'Microsoft YaHei';
 }
-.table-titleItem {
+.table-title-item {
   color: rgb(50, 76, 220);
   font-style: normal;
   font-family: 'Microsoft YaHei';
+}
+.el-tag {
+  margin: 5px;
 }
 </style>

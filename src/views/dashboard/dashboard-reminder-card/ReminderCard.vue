@@ -56,7 +56,7 @@ import CardProgress from './CardProgress.vue'
   align-items: center;
 }
 .dashboard-reminderCard-gif .reminderCard-gif {
-  background-image: url('/dashboardCard.gif');
+  background-image: url('/avatar.webp');
   background-size: 100% 100%;
   width: 50px;
   height: 50px;

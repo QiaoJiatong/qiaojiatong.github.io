@@ -40,18 +40,60 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import axios from 'axios'
+import { ref, computed } from 'vue'
+// import axios from 'axios'
 
-const allItems = ref([])
-onMounted(() => {
-  axios.get('https://6504881cc8869921ae252701.mockapi.io/todoList').then((res) => {
-    allItems.value = res.data.map((d) => d.text)
-    checkedItems.value = []
-  })
-})
+const allItems = ref([
+  '购物',
+  '健身',
+  '学习',
+  '工作',
+  '旅行',
+  '阅读',
+  '家务',
+  '会议',
+  '电影',
+  '瑜伽',
+  '游戏',
+  '写作',
+  '绘画',
+  '音乐',
+  '社交',
+  '烹饪',
+  '散步',
+  '跑步',
+  '看剧',
+  '休息',
+  '沐浴',
+  '写邮件',
+  '买菜',
+  '理发',
+  '做饭',
+  '清洁',
+  '看新闻',
+  '摄影',
+  '编程'
+])
+// onMounted(() => {
+//   axios.get('https://6504881cc8869921ae252701.mockapi.io/todoList').then((res) => {
+//     allItems.value = res.data.map((d) => d.text)
+//     console.log(allItems.value);
+//     checkedItems.value = []
+//   })
+// })
 
-const checkedItems = ref([])
+const checkedItems = ref([
+  '工作',
+  '旅行',
+  '阅读',
+  '家务',
+  '散步',
+  '跑步',
+  '看剧',
+  '休息',
+  '沐浴',
+  '写邮件'
+])
 
 const statusBtns = ['all', 'active', 'completed']
 const selectedDisplay = ref('all')

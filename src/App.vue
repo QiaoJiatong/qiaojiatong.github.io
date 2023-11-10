@@ -5,8 +5,10 @@
       <el-header>
         <BreadcrumbBar />
         <AvatarMenu />
-        <TabBar />
       </el-header>
+      <div class="tab-bar-container">
+        <TabBar />
+      </div>
       <router-view />
     </el-main>
   </el-container>
@@ -22,7 +24,7 @@ export default {
   components: { SideBar, BreadcrumbBar, TabBar, AvatarMenu },
   computed: {
     needSideBar() {
-      return this.$route.path !== '/login'
+      return !this.$route.meta.singlePage
     }
   }
 }
@@ -42,6 +44,17 @@ export default {
   padding: 0 10px;
   height: min-content;
   position: relative;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.12),
+    0 0 3px 0 rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  height: 50px;
+}
+.tab-bar-container {
+  border-bottom: 1px solid #d8dce5;
   box-shadow:
     0 1px 3px 0 rgba(0, 0, 0, 0.12),
     0 0 3px 0 rgba(0, 0, 0, 0.04);

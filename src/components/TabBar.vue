@@ -1,7 +1,7 @@
 <template>
-  <el-scrollbar>
+  <el-scrollbar @wheel.prevent="handleScroll" ref="scrollbarRef">
     <div class="tab-bar">
-      <router-link v-for="tab in tabData" :key="tab.path" class="tab-bar__item" :to="tab.path">
+      <router-link ref="tabView" v-for="tab in tabData" :key="tab.path" class="tab-bar__item" :to="tab.path">
         {{ tab.name }}
         <el-icon v-if="tab.path !== routes[0].path" @click.prevent.stop="closeView(tab)"
           ><Close
@@ -19,10 +19,17 @@ import routes from '../router/route'
 const tabData = ref([])
 const route = useRoute()
 const router = useRouter()
-
+const tabView = ref()
 onMounted(() => {
   tabData.value.push(routes[0])
 })
+
+const scrollbarRef = ref()
+const handleScroll = (e) => {
+  const eventDelta = e.wheelDelta || -e.deltaY * 40
+  const $scrollWrapper = scrollbarRef.value.wrapRef
+  $scrollWrapper.scrollLeft = $scrollWrapper.scrollLeft - eventDelta / 4
+}
 
 watch(route, (newRoute) => {
   if (tabData.value.some((tab) => tab.path === newRoute.path)) {
@@ -43,7 +50,7 @@ const cloneDeep = (item) => {
 // const obj = {
 //   text: '1'
 // }
-// console.log(obj === cloneDeep(obj)) 
+// console.log(obj === cloneDeep(obj))
 // const fxArr = ['One', 'Two', 'Three']
 // const fxArrs = fxArr
 // console.log(fxArr === fxArrs)
@@ -59,6 +66,7 @@ const closeView = (view) => {
 .tab-bar {
   height: 40px;
   display: flex;
+  align-items: center;
 }
 .tab-bar__item {
   position: relative;
@@ -77,6 +85,7 @@ const closeView = (view) => {
   align-items: center;
   justify-content: center;
   border-radius: 4px;
+  margin-left: 5px;
 }
 
 .router-link-active {

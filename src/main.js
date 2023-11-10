@@ -6,19 +6,20 @@ import IconFont from './components/icon-font.vue'
 import './assets/iconfont/iconfont'
 import './assets/main.css'
 import VueClipboards from 'vue-clipboard2'
-import permission from './permission/permission'
+import permission from './permission'
+import i18n from './i18n'
 
 import App from './App.vue'
 import router from './router'
-
 
 const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
 app.use(ElementPlus)
-app.use(VueClipboards);
-app.directive('permission',permission)
+app.use(VueClipboards)
+app.use(i18n)
+app.directive('permission', permission)
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)

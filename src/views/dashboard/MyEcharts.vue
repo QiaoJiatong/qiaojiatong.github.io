@@ -69,12 +69,16 @@ export default {
             radar: {
               indicator: [
                 { name: 'Sales', max: 10000 },
-                { name: 'Administration', max: 10000 },
-                { name: 'Information Technology', max: 10000 },
+                { name: 'ration', max: 10000 },
+                { name: 'Technology', max: 10000 },
                 { name: 'Customer Support', max: 10000 },
                 { name: 'Development', max: 10000 },
                 { name: 'Marketing', max: 10000 }
               ]
+            },
+            resize:{
+              width:200,
+              height:200
             },
             series: [
               {
@@ -95,7 +99,7 @@ export default {
                   }
                 ]
               }
-            ]
+            ],
           }
         },
         {
@@ -148,7 +152,6 @@ export default {
                 data: [
                   { value: 40, name: 'Industries' },
                   { value: 28, name: 'Technology' },
-                  { value: 18, name: 'Forex' },
                   { value: 12, name: 'Gold' },
                   { value: 8, name: 'Forecasts' }
                 ]

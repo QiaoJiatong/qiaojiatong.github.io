@@ -15,7 +15,7 @@ const router = createRouter({
       path: '/login',
       name: '登录页面',
       component: LoginPage,
-      meta: { icon: 'UserFilled' }
+      meta: { icon: 'UserFilled', singlePage: true }
     },
     ...routes
   ]

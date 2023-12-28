@@ -31,10 +31,13 @@ copiedObject.c.d = 300
 console.log(originalObject) // 原对象应该保持不变
 
 // 测试深拷贝一个包含数组的对象
-const originalArray = [1, 2, [3, 4, [5, 6]]]
+const originalArray = ['a', {b: 1, c: [1, 2]}]
 const copiedArray = cloneDeep(originalArray)
 console.log(copiedArray) // 输出一个与原数组相同但不同的数组
 
 // 确保修改复制后的数组不会影响原数组
-copiedArray[2][2][0] = 500
+copiedArray[1].c[0] = 500
 console.log(originalArray) // 原数组应该保持不变
+console.log(copiedArray)
+
+

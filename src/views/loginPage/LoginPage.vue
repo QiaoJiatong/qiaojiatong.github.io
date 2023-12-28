@@ -10,6 +10,10 @@
       </el-form-item>
     </el-form>
     <el-button type="primary" @click="toLogin">登 录</el-button>
+    <div class="available-account">
+      <span>账号: joe 密码: 123456</span>
+      <span>账号: admin 密码: admin</span>
+    </div>
   </div>
 </template>
 <script setup>
@@ -70,15 +74,26 @@ h1 {
 .login-page {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  align-items: center;
   background-color: #2d3a4b;
   height: 100%;
+  justify-content: flex-start;
+  align-items: center;
 }
 .el-input {
   width: 300px;
 }
 .el-button {
   width: 100px;
+}
+
+.available-account {
+  display: flex;
+  flex-direction: column;
+}
+
+span {
+  width: 240px;
+  padding: 5px;
+  color: red;
 }
 </style>
